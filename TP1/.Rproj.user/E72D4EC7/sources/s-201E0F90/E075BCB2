@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1540655654130.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "E075BCB2",
+    "lastKnownWriteTime" : 1540659773,
+    "last_content_update" : 1540659773313,
+    "path" : "~/Actuariat/Deuxième année/Session 3/Modèles linéaires/TP1/script.R",
+    "project_path" : "script.R",
+    "properties" : {
+        "cursorPosition" : "39,0",
+        "scrollLine" : "24"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
