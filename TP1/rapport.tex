@@ -1,3 +1,14 @@
+% Avant de compile to PDF, s'assurer d'être en mode knitr au lieu de Sweave
+% Pour ce faire : Global options - Sweave - Weave rnw files with - Knitr.
+%
+% Thx
+
+
+%%% SCRIPT PART:
+
+
+
+
 
 \documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
 %% maxwidth is the original width if it is less than linewidth
@@ -53,6 +64,10 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage{url}
+\usepackage[toc,page]{appendix}
+\renewcommand{\appendixpagename}{Annexes}
+\renewcommand{\appendixtocname}{Annexes}
+\renewcommand{\contentsname}{Table des matières}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 
@@ -70,88 +85,67 @@
 
 \vfill
 
+\Large Guillaume \textsc{Michel}\\
+\Large Nathanaël \textsc{Pelchat}\\
+\Large Mikael \textsc{Robertson}\\
 \Large Olivier \textsc{Turcotte}\\
+\vspace{3cm}
 {\Large \textsc{Automne} 2018}
 
 \end{center}
 \newpage
-\tableofcontents
 
+
+
+
+\section{Sommaire exécutif}
+\label{sec:sommaire}
+
+
+%%Table des matières
+\newpage
+\tableofcontents
 \newpage
 
-\section{Introduction}
-
-Dans la section~\ref{sec:commandes}, on présente quelques commandes utiles, puis, des exemples de graphiques et tableaux sont donnés dans les sections \ref{sec:graph} et \ref{sec:tab}, respectivement.
-
-\section{Quelques commandes utiles} 
-\label{sec:commandes}
-
-Les numéros de section et de sous-section se copieront directement dans la table des matières si on utilise la bonne commande. On peut référer aux sous-sections en leur assignant une étiquette, comme à la sous-section~\ref{ssec:listes}
-
-\subsection{Listes et énumérations}
-\label{ssec:listes}
-
-On peut faire une énumération avec l'environnement suivant:
-
-\begin{enumerate}
-\item ceci est le premier point,
-
-\item deuxième point, etc.
-\end{enumerate}
-
-\bigskip\noindent
-Voici une autre liste:
-
-\begin{itemize}
-\item [a.] ceci est le premier point,
-
-\item [b.] deuxième point, etc.
-\end{itemize}
-
-\subsection{Code}
-
-On peut écrire du code avec l'environnement suivant:
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{rnorm}\hlstd{(}\hlnum{1}\hlstd{)}
-\hlstd{x}
-\end{alltt}
-\begin{verbatim}
-## [1] 1.508685
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
-
-\subsection{Équations}
-
-Dans le texte, on écrit les symboles mathématiques comme $\theta$. Si on veut mettre une équation en valeur, par exemple pour $j\in \{1,\ldots, n\}$, on a
-
-$$
-Y_j= \beta_0 +\beta_1 x_j +\varepsilon_j.
-$$
-
-On peut aussi écrire
-\begin{equation}\label{eq1}
-s^2 = \frac{1}{n-2} \sum_{i=1}^n \hat{\varepsilon}_i^2
-\end{equation}
-pour pouvoir référer à l'équation \ref{eq1} dans le texte. On ne numérote que les équations qui sont utilisées.
+\section{Analyse des données} 
+\label{sec:analyse}
 
 
 
-\section{Graphiques}
-\label{sec:graph}
+\section{Modèle proposé}
+\label{sec:modele}
+
+\subsection{Équation}
+\label{ssec:equation}
+
+\subsection{Variables qualitatives}
+\label{ssec:var_qual}
+
+\subsection{Interactions}
+\label{ssec:interaction}
+
+\subsection{Interprétation}
+\label{ssec:interpretation}
+
+\subsection{Statistiques}
+\label{ssec:stats}
+
+\section{Analyse des résidus}
+\label{sec:analyse}
+
+\section{Prévisions}
+\label{sec:prev}
+
+\section{Recommendations}
 
 
-\section{Tableaux}
-\label{sec:tab}
+\begin{appendices}
+\section{Erreurs de données}
 
+\section{Transformation}
 
-\appendix
-\section{Annexe}
-
-Voici une annexe.
-
+\section{Sélection des variables}
+\end{appendices}
 
 
 \end{document}
