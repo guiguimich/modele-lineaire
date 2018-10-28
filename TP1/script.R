@@ -55,3 +55,4 @@ step2 <- stepAIC(fit, direction="forward")
 step3 <- stepAIC(fit, direction="backward")
 step1$anova
 step2$anova
+step3$anova
