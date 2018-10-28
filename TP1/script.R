@@ -1,11 +1,12 @@
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(ggplot2,gridExtra,MASS)
+pacman::p_load(ggplot2,reshape2,gridExtra,MASS)
 
 # Analyse préliminaire des données ----
 data <- read.csv("AutoBodyInjury.csv",sep = ";")
 tail(sort(data$CLMAGE),5) 
 tail(sort(data$LOSS),5)
 str(data)
+summary(data[,7:8])
 ## Correction des erreurs dans MARITAL
 correction <- gsub("ma.*","married",data$MARITAL)
 correction <- gsub("si.*","single",correction)
@@ -38,13 +39,13 @@ p4 <- ggplot(data=df_list[[4]], aes(x=CLMINSUR,y = Freq,color=CLMINSUR)) + geom_
 p5 <- ggplot(data=df_list[[5]], aes(x=SEATBELT,y = Freq,color=SEATBELT)) + geom_bar(stat="identity",fill = "lightgrey") +theme_classic()
 grid.arrange(p1,p2,p3,p4,p5, nrow = 2)
 
-# Modèle ----
 
+# Modèle ----
 summary(data$LOSS)
-boxplot(data$CLMAGE)# un age de 610 et des ages de 0 : peut être problématique
-boxplot(data$LOSS) # Loss de 1m très éloignée des autres, va être à regarder
-hist(data$CLMAGE) # Un log(1+age)(car il y a des valeurs de 0) pourrait être utilisé ,car fortement asymétrique
-hist(data$LOSS) ## Un log(1+loss) pourrait être utilisé ,car fortement asymétrique
+boxplot(log(1+data$CLMAGE))# un age de 610 et des ages de 0 : peut être problématique
+boxplot(log(data$LOSS)) # Loss de 1m très éloignée des autres, va être à regarder
+hist(log(1+data$CLMAGE)) # Un log(1+age)(car il y a des valeurs de 0) pourrait être utilisé ,car fortement asymétrique
+hist(log(data$LOSS)) ## Un log(1+loss) pourrait être utilisé ,car fortement asymétrique
 (fit <- lm(I(log(1+LOSS))~I(log(1+CLMAGE)) + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT
                 + I(log(1+CLMAGE))*ATTORNEY + I(log(1+CLMAGE))*CLMSEX + I(log(1+CLMAGE))*MARITAL + I(log(1+CLMAGE))*CLMINSUR + I(log(1+CLMAGE))*SEATBELT
                 + ATTORNEY*CLMSEX + ATTORNEY*MARITAL + ATTORNEY*CLMINSUR + ATTORNEY*SEATBELT

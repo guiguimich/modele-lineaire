@@ -120,6 +120,14 @@ LOSS               & Valeur continue      & Perte économique totale du réclama
 grid.arrange(p1,p2,p3,p4,p5, nrow = 3)
 @
 
+<<echo = FALSE>>=
+summary(data[,7:8])
+par(mfrow=c(2,2))
+boxplot(log(1+data$CLMAGE))
+boxplot(log(data$LOSS))
+hist(log(1+data$CLMAGE))
+hist(log(data$LOSS))
+@
 
 
 

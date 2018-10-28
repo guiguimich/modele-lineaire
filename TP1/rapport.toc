@@ -1,15 +1,15 @@
 \contentsline {section}{\numberline {1}Sommaire ex\IeC {\'e}cutif}{2}
 \contentsline {section}{\numberline {2}Analyse des donn\IeC {\'e}es}{4}
-\contentsline {section}{\numberline {3}Mod\IeC {\`e}le propos\IeC {\'e}}{6}
-\contentsline {subsection}{\numberline {3.1}\IeC {\'E}quation}{6}
-\contentsline {subsection}{\numberline {3.2}Variables qualitatives}{6}
-\contentsline {subsection}{\numberline {3.3}Interactions}{6}
-\contentsline {subsection}{\numberline {3.4}Interpr\IeC {\'e}tation}{6}
-\contentsline {subsection}{\numberline {3.5}Statistiques}{6}
-\contentsline {section}{\numberline {4}Analyse des r\IeC {\'e}sidus}{6}
-\contentsline {section}{\numberline {5}Pr\IeC {\'e}visions}{6}
-\contentsline {section}{\numberline {6}Recommendations}{6}
-\contentsline {section}{Annexes}{6}
-\contentsline {section}{\numberline {A}Erreurs de donn\IeC {\'e}es}{6}
-\contentsline {section}{\numberline {B}Transformation}{6}
-\contentsline {section}{\numberline {C}S\IeC {\'e}lection des variables}{6}
+\contentsline {section}{\numberline {3}Mod\IeC {\`e}le propos\IeC {\'e}}{7}
+\contentsline {subsection}{\numberline {3.1}\IeC {\'E}quation}{7}
+\contentsline {subsection}{\numberline {3.2}Variables qualitatives}{7}
+\contentsline {subsection}{\numberline {3.3}Interactions}{7}
+\contentsline {subsection}{\numberline {3.4}Interpr\IeC {\'e}tation}{7}
+\contentsline {subsection}{\numberline {3.5}Statistiques}{7}
+\contentsline {section}{\numberline {4}Analyse des r\IeC {\'e}sidus}{7}
+\contentsline {section}{\numberline {5}Pr\IeC {\'e}visions}{7}
+\contentsline {section}{\numberline {6}Recommendations}{7}
+\contentsline {section}{Annexes}{7}
+\contentsline {section}{\numberline {A}Erreurs de donn\IeC {\'e}es}{7}
+\contentsline {section}{\numberline {B}Transformation}{7}
+\contentsline {section}{\numberline {C}S\IeC {\'e}lection des variables}{7}
