@@ -1,11 +1,10 @@
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(ggplot2,gridExtra )
+pacman::p_load(ggplot2,gridExtra,MASS)
 
+# Analyse préliminaire des données ----
 data <- read.csv("AutoBodyInjury.csv",sep = ";")
-tail(sort(data$CLMAGE),5) # Il faut enlever 610
-tail(sort(data$LOSS),5) # Il faut peut-être enlever le 1067
-#DANS CLMSEX, il y a des male, convertir en M ?
-#Dans marital, il y a des fautes de frappes des statuts et des others
+tail(sort(data$CLMAGE),5) 
+tail(sort(data$LOSS),5)
 
 ## Correction des erreurs dans MARITAL
 correction <- gsub("ma.*","married",data$MARITAL)
@@ -23,7 +22,7 @@ for(i in c("ATTORNEY","CLMINSUR","SEATBELT")){
 }
 #sapply(data,class)
 
-# Création du plot des fréquences.
+# Création du plot des fréquences ----
 df_list <- list()
 for(i in c("ATTORNEY","CLMSEX","MARITAL","CLMINSUR","SEATBELT") ){
     tab <- table(data[[i]])
@@ -39,6 +38,9 @@ p4 <- ggplot(data=df_list[[4]], aes(x=CLMINSUR,y = Freq,color=CLMINSUR)) + geom_
 p5 <- ggplot(data=df_list[[5]], aes(x=SEATBELT,y = Freq,color=SEATBELT)) + geom_bar(stat="identity",fill = "lightgrey") +theme_classic()
 grid.arrange(p1,p2,p3,p4,p5, nrow = 2)
 
+# Modèle ----
+
+summary(data$LOSS)
 boxplot(data$CLMAGE)# un age de 610 et des ages de 0 : peut être problématique
 boxplot(data$LOSS) # Loss de 1m très éloignée des autres, va être à regarder
 hist(data$CLMAGE) # Un log(1+age)(car il y a des valeurs de 0) pourrait être utilisé ,car fortement asymétrique
@@ -51,7 +53,7 @@ hist(data$LOSS) ## Un log(1+loss) pourrait être utilisé ,car fortement asymét
                 +CLMINSUR*SEATBELT,data=data)) #l'interaction MARITAL*SEATBELT semble ne pas fonctionner
 ## Mon idée: faire la méthode forward ou backward sur le modèle complet plus haut pour obtenir le
 ## bon modèle à utiliser 
-library(MASS)
+
 step1 <- stepAIC(fit, direction="both")
 step2 <- stepAIC(fit, direction="forward")
 step3 <- stepAIC(fit, direction="backward")
