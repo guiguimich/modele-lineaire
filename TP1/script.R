@@ -1,5 +1,9 @@
 if (!require("pacman")) install.packages("pacman")
+<<<<<<< HEAD
 pacman::p_load(ggplot2,reshape2,gridExtra,MASS)
+=======
+pacman::p_load(ggplot2,gridExtra,MASS,car)
+>>>>>>> 33595c5a5592c6e4aa4551884b032ba79fd7eb9a
 
 # Analyse préliminaire des données ----
 data <- read.csv("AutoBodyInjury.csv",sep = ";")
@@ -42,22 +46,72 @@ grid.arrange(p1,p2,p3,p4,p5, nrow = 2)
 
 # Modèle ----
 summary(data$LOSS)
+<<<<<<< HEAD
 boxplot(log(1+data$CLMAGE))# un age de 610 et des ages de 0 : peut être problématique
 boxplot(log(data$LOSS)) # Loss de 1m très éloignée des autres, va être à regarder
 hist(log(1+data$CLMAGE)) # Un log(1+age)(car il y a des valeurs de 0) pourrait être utilisé ,car fortement asymétrique
 hist(log(data$LOSS)) ## Un log(1+loss) pourrait être utilisé ,car fortement asymétrique
 (fit <- lm(I(log(1+LOSS))~I(log(1+CLMAGE)) + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT
+=======
+boxplot(data$CLMAGE)# un age de 610 et des ages de 0 : peut être problématique
+boxplot(data$LOSS) # Loss de 1m très éloignée des autres, va être à regarder
+hist(data$CLMAGE) # Un log(1+age)(car il y a des valeurs de 0) pourrait être utilisé ,car fortement asymétrique
+hist(data$LOSS) ## Un log(1+loss) pourrait être utilisé ,car fortement asymétrique
+
+## Voici les 4 principaux modèles comportants toutes les interactions
+(fit1 <- lm(I(log(LOSS))~I(log(1+CLMAGE)) + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT 
+>>>>>>> 33595c5a5592c6e4aa4551884b032ba79fd7eb9a
                 + I(log(1+CLMAGE))*ATTORNEY + I(log(1+CLMAGE))*CLMSEX + I(log(1+CLMAGE))*MARITAL + I(log(1+CLMAGE))*CLMINSUR + I(log(1+CLMAGE))*SEATBELT
                 + ATTORNEY*CLMSEX + ATTORNEY*MARITAL + ATTORNEY*CLMINSUR + ATTORNEY*SEATBELT
                 + CLMSEX*MARITAL + CLMSEX*CLMINSUR + CLMSEX*SEATBELT
                 + MARITAL*CLMINSUR + MARITAL*SEATBELT
-                +CLMINSUR*SEATBELT,data=data)) #l'interaction MARITAL*SEATBELT semble ne pas fonctionner
+                +CLMINSUR*SEATBELT,data=data))
+(fit2 <- lm(LOSS~I(log(1+CLMAGE)) + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT 
+            + I(log(1+CLMAGE))*ATTORNEY + I(log(1+CLMAGE))*CLMSEX + I(log(1+CLMAGE))*MARITAL + I(log(1+CLMAGE))*CLMINSUR + I(log(1+CLMAGE))*SEATBELT
+            + ATTORNEY*CLMSEX + ATTORNEY*MARITAL + ATTORNEY*CLMINSUR + ATTORNEY*SEATBELT
+            + CLMSEX*MARITAL + CLMSEX*CLMINSUR + CLMSEX*SEATBELT
+            + MARITAL*CLMINSUR + MARITAL*SEATBELT
+            +CLMINSUR*SEATBELT,data=data))
+(fit3 <- lm(LOSS~CLMAGE + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT 
+            + CLMAGE*ATTORNEY + CLMAGE*CLMSEX + CLMAGE*MARITAL + CLMAGE*CLMINSUR + CLMAGE*SEATBELT
+            + ATTORNEY*CLMSEX + ATTORNEY*MARITAL + ATTORNEY*CLMINSUR + ATTORNEY*SEATBELT
+            + CLMSEX*MARITAL + CLMSEX*CLMINSUR + CLMSEX*SEATBELT
+            + MARITAL*CLMINSUR + MARITAL*SEATBELT
+            +CLMINSUR*SEATBELT,data=data))
+(fit4 <- lm(log(LOSS)~CLMAGE + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT 
+            + CLMAGE*ATTORNEY + CLMAGE*CLMSEX + CLMAGE*MARITAL + CLMAGE*CLMINSUR + CLMAGE*SEATBELT
+            + ATTORNEY*CLMSEX + ATTORNEY*MARITAL + ATTORNEY*CLMINSUR + ATTORNEY*SEATBELT
+            + CLMSEX*MARITAL + CLMSEX*CLMINSUR + CLMSEX*SEATBELT
+            + MARITAL*CLMINSUR + MARITAL*SEATBELT
+            +CLMINSUR*SEATBELT,data=data))
+
+
+
+#l'interaction MARITAL*SEATBELT semble ne pas fonctionner
 ## Mon idée: faire la méthode forward ou backward sur le modèle complet plus haut pour obtenir le
 ## bon modèle à utiliser 
+## On remarque que tant et aussi longtemps qu'on a des interactions, il y a multicolinéarité 
+## donc le modèle semble ne pas avoir d'interactions
 
-step1 <- stepAIC(fit, direction="both")
-step2 <- stepAIC(fit, direction="forward")
-step3 <- stepAIC(fit, direction="backward")
-step1$anova
-step2$anova
-step3$anova
+
+step1 <- stepAIC(fit1, direction="both")
+step2 <- stepAIC(fit1, direction="forward")
+step3 <- stepAIC(fit1, direction="backward")
+debut_fit <- lm(I(log(LOSS)) ~ I(log(1 + CLMAGE)) + ATTORNEY + MARITAL + CLMINSUR + 
+                  SEATBELT ,data=data) 
+
+step1 <- stepAIC(debut_fit, direction="both")
+step2 <- stepAIC(debut_fit, direction="forward")
+step3 <- stepAIC(debut_fit, direction="backward")
+
+test1 <- lm(formula(step1),data=data)
+test2 <- lm(formula(step2),data=data)
+
+summary(test1)
+summary(test2)### regarder si ca vaut la peine de garder CLMINSUR
+
+library(car)
+vif(good_fit1) # meilleur modèle pour les VIFS
+# les interactions causent des problèmes de VIFs
+
+
