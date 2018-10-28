@@ -7,7 +7,42 @@
 %%% SCRIPT PART:
 
 <<include = FALSE>>=
-    #data <- read.csv("AutoBodyInjury.csv",sep = ";")
+    if (!require("pacman")) install.packages("pacman")
+    pacman::p_load(ggplot2,gridExtra,MASS)
+    data <- read.csv("AutoBodyInjury.csv",sep = ";")
+    tail(sort(data$CLMAGE),5) 
+    tail(sort(data$LOSS),5)
+    str(data)
+    ## Correction des erreurs dans MARITAL
+    correction <- gsub("ma.*","married",data$MARITAL)
+    correction <- gsub("si.*","single",correction)
+    data$MARITAL <- factor(correction)
+    
+    ## Correction des erreurs dans CLMSEX
+    correction <- gsub("male*","M",data$CLMSEX)
+    data$CLMSEX <- factor(correction)
+    
+    
+    # Conversion en factor de ATTORNEY,CLIMINSUR & SEATBELT
+    for(i in c("ATTORNEY","CLMINSUR","SEATBELT")){
+        data[[i]] <- as.factor(data[[i]])
+    }
+    #sapply(data,class)
+    
+    # Création du plot des fréquences ----
+    df_list <- list()
+    for(i in c("ATTORNEY","CLMSEX","MARITAL","CLMINSUR","SEATBELT") ){
+        tab <- table(data[[i]])
+        df <- as.data.frame(tab)
+        df$Var1 <- levels(data[[i]])
+        names(df)[names(df)=="Var1"] <- i
+        df_list[[i]] <- df
+    }
+    p1 <- ggplot(data=df_list[[1]], aes(x=ATTORNEY,y = Freq,color=ATTORNEY)) + geom_bar(stat="identity",fill = "lightgrey") +theme_classic()
+    p2 <- ggplot(data=df_list[[2]], aes(x=CLMSEX,y = Freq,color=CLMSEX)) + geom_bar(stat="identity",fill = "lightgrey") +theme_classic()
+    p3 <- ggplot(data=df_list[[3]], aes(x=MARITAL,y = Freq,color=MARITAL)) + geom_bar(stat="identity",fill = "lightgrey") +theme_classic()
+    p4 <- ggplot(data=df_list[[4]], aes(x=CLMINSUR,y = Freq,color=CLMINSUR)) + geom_bar(stat="identity",fill = "lightgrey") +theme_classic()
+    p5 <- ggplot(data=df_list[[5]], aes(x=SEATBELT,y = Freq,color=SEATBELT)) + geom_bar(stat="identity",fill = "lightgrey") +theme_classic() 
 @
 
 
@@ -60,6 +95,31 @@
 
 \section{Analyse des données} 
 \label{sec:analyse}
+Pour le moment, j'ai juste foutu tous les graphiques disponibles. Aucune structure.
+
+Voici les variables disponibles afin d'effectuer un modèle prédictif de la perte économique:
+
+\begin{table}[htb]
+\caption{Description des variables}
+\begin{tabular}{lll}
+\hline
+\textbf{Variables} & \textbf{Type}        & \textbf{Description}                                         \\ \hline
+CASENUM            & Valeur entière       & Numéro d'identification de la réclamation                    \\ \hline
+ATTORNEY           & Variable indicatrice & Indique si le réclamant est représenté par un avocat         \\ \hline
+CLMSEX             & Variable indicatrice & Indique le sexe du réclamant                                 \\ \hline
+MARITAL            & Variable polytomique & Indique le statut marital du réclamant                       \\ \hline
+CLMINSUR           & Variable polytomique & Indique si le réclamant est assuré                           \\ \hline
+SEATBELT           & Variable polytomique & Indique si le réclamant portait une ceinture de sécurité     \\ \hline
+CLMAGE             & Valeur entière       & Âge du réclamant                                             \\ \hline
+LOSS               & Valeur continue      & Perte économique totale du réclamant  en milliers de dollars \\ \hline
+\end{tabular}
+\end{table}
+
+\newpage
+<<echo = FALSE>>=
+grid.arrange(p1,p2,p3,p4,p5, nrow = 3)
+@
+
 
 
 

@@ -5,7 +5,7 @@ pacman::p_load(ggplot2,gridExtra,MASS)
 data <- read.csv("AutoBodyInjury.csv",sep = ";")
 tail(sort(data$CLMAGE),5) 
 tail(sort(data$LOSS),5)
-
+str(data)
 ## Correction des erreurs dans MARITAL
 correction <- gsub("ma.*","married",data$MARITAL)
 correction <- gsub("si.*","single",correction)

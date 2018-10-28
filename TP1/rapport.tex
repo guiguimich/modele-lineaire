@@ -109,6 +109,33 @@
 
 \section{Analyse des données} 
 \label{sec:analyse}
+Pour le moment, j'ai juste foutu tous les graphiques disponibles. Aucune structure.
+
+Voici les variables disponibles afin d'effectuer un modèle prédictif de la perte économique:
+
+\begin{table}[htb]
+\caption{Description des variables}
+\begin{tabular}{lll}
+\hline
+\textbf{Variables} & \textbf{Type}        & \textbf{Description}                                         \\ \hline
+CASENUM            & Valeur entière       & Numéro d'identification de la réclamation                    \\ \hline
+ATTORNEY           & Variable indicatrice & Indique si le réclamant est représenté par un avocat         \\ \hline
+CLMSEX             & Variable indicatrice & Indique le sexe du réclamant                                 \\ \hline
+MARITAL            & Variable polytomique & Indique le statut marital du réclamant                       \\ \hline
+CLMINSUR           & Variable polytomique & Indique si le réclamant est assuré                           \\ \hline
+SEATBELT           & Variable polytomique & Indique si le réclamant portait une ceinture de sécurité     \\ \hline
+CLMAGE             & Valeur entière       & Âge du réclamant                                             \\ \hline
+LOSS               & Valeur continue      & Perte économique totale du réclamant  en milliers de dollars \\ \hline
+\end{tabular}
+\end{table}
+
+\newpage
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-2-1} 
+
+\end{knitrout}
+
 
 
 
