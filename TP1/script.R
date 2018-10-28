@@ -46,21 +46,15 @@ grid.arrange(p1,p2,p3,p4,p5, nrow = 2)
 
 # Modèle ----
 summary(data$LOSS)
-<<<<<<< HEAD
-boxplot(log(1+data$CLMAGE))# un age de 610 et des ages de 0 : peut être problématique
-boxplot(log(data$LOSS)) # Loss de 1m très éloignée des autres, va être à regarder
-hist(log(1+data$CLMAGE)) # Un log(1+age)(car il y a des valeurs de 0) pourrait être utilisé ,car fortement asymétrique
-hist(log(data$LOSS)) ## Un log(1+loss) pourrait être utilisé ,car fortement asymétrique
-(fit <- lm(I(log(1+LOSS))~I(log(1+CLMAGE)) + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT
-=======
+
 boxplot(data$CLMAGE)# un age de 610 et des ages de 0 : peut être problématique
 boxplot(data$LOSS) # Loss de 1m très éloignée des autres, va être à regarder
-hist(data$CLMAGE) # Un log(1+age)(car il y a des valeurs de 0) pourrait être utilisé ,car fortement asymétrique
-hist(data$LOSS) ## Un log(1+loss) pourrait être utilisé ,car fortement asymétrique
+hist(log(1+data$CLMAGE)) # Un log(1+age)(car il y a des valeurs de 0) pourrait être utilisé ,car fortement asymétrique
+hist(log(data$LOSS)) ## Un log(1+loss) pourrait être utilisé ,car fortement asymétrique
 
 ## Voici les 4 principaux modèles comportants toutes les interactions
 (fit1 <- lm(I(log(LOSS))~I(log(1+CLMAGE)) + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT 
->>>>>>> 33595c5a5592c6e4aa4551884b032ba79fd7eb9a
+
                 + I(log(1+CLMAGE))*ATTORNEY + I(log(1+CLMAGE))*CLMSEX + I(log(1+CLMAGE))*MARITAL + I(log(1+CLMAGE))*CLMINSUR + I(log(1+CLMAGE))*SEATBELT
                 + ATTORNEY*CLMSEX + ATTORNEY*MARITAL + ATTORNEY*CLMINSUR + ATTORNEY*SEATBELT
                 + CLMSEX*MARITAL + CLMSEX*CLMINSUR + CLMSEX*SEATBELT
