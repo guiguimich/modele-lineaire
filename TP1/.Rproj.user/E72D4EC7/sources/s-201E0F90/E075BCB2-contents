@@ -23,6 +23,8 @@ for(i in c("ATTORNEY","CLMINSUR","SEATBELT")){
 }
 
 #sapply(data,class)
+
+# Création du plot des fréquences.
 df_list <- list()
 for(i in c("ATTORNEY","CLMSEX","MARITAL","CLMINSUR","SEATBELT") ){
     tab <- table(data[[i]])
