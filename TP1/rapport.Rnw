@@ -178,7 +178,7 @@ Cette colonne contient une valeur très extrême de \textit{1067.697}. En analys
 
 <<echo = FALSE,fig.cap="\\label{fig:figs}Boxplot de LOSS">>=
 ggplot(data, aes(y = LOSS)) +
-    geom_boxplot() + geom_point(data=data.frame(x=0,y=max(data$LOSS)), size = 3,aes(x=x,y=y),colour="red")
+    geom_boxplot() + geom_point(data=data.frame(x=0,y=max(data$LOSS)), size = 3,aes(x=x,y=y),colour="red") +theme_classic()
 
 @
 
