@@ -95,7 +95,7 @@ formula(step2)# On enleve des variables jusqu'à ce que les vifs soient bons...
 #suivant :
 
 
-modele <- lm(log(LOSS)~CLMAGE + ATTORNEY + MARITAL + CLMINSUR + SEATBELT + 
+modele <- lm(log(LOSS)~CLMAGE + ATTORNEY + MARITAL + SEATBELT + 
                     CLMAGE:ATTORNEY,data=data)
 
 vif(modele) # meilleur modèle pour les VIFS
@@ -110,3 +110,4 @@ qqline(as.numeric(rstudent(modele)))
 
 pureErrorAnova(modele)
 
+#

@@ -12,5 +12,5 @@
 \contentsline {section}{\numberline {6}Recommendations}{6}
 \contentsline {section}{Annexes}{6}
 \contentsline {section}{\numberline {A}Erreurs de donn\IeC {\'e}es}{6}
-\contentsline {section}{\numberline {B}Transformation}{8}
+\contentsline {section}{\numberline {B}Transformation}{7}
 \contentsline {section}{\numberline {C}S\IeC {\'e}lection des variables}{8}

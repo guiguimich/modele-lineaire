@@ -65,6 +65,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[french]{babel}
 \usepackage{caption}
+\usepackage{amsmath}
 \captionsetup[table]{name=Tableau}
 \usepackage{url}
 \usepackage[toc,page]{appendix}
@@ -162,7 +163,14 @@ Ces variables sont en majorité qualitative. Une analyse de fréquences de celle
 
 \subsection{Équation}
 \label{ssec:equation}
-
+Le modèle choisit est donné par l'équation suivante
+$$
+\begin{aligned}
+\ln Y  = & \beta_0 + \beta_1x_{i,CLMAGE} + \beta_2x_{i,ATTORNEY} + \beta_{3,1}x_{i,MARITAL,2} + \\ 
+& \beta_{3,2}x_{i,MARITAL,3} + \beta_{3,3}x_{i,MARITAL,4} + \beta_4x_{i,SEATBELT} + \\ 
+& \beta_5x_{i,CLMAGE}*x_{i,ATTORNEY}\\
+\end{aligned}
+$$
 \subsection{Variables qualitatives}
 \label{ssec:var_qual}
 
