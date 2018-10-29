@@ -46,21 +46,22 @@ p5 <- ggplot(data=df_list[[5]], aes(x=SEATBELT,y = Freq,color=SEATBELT)) + geom_
 grid.arrange(p1,p2,p3,p4,p5, nrow = 2)
 
 
-# Modèle ----
+#################################### Modèle #################################
 summary(data$LOSS)
 
 ## Développement pour les transformations à faire : 
 
-##test pour respecter les hypothèses
+##test pour respecter les hypothèses de base avec la seule variable continue
 temp <- lm(LOSS ~ CLMAGE ,data=data)
 par(mfrow = c(1,3))
 plot(data$CLMAGE,data$LOSS)
 plot(temp$fitted.values,rstudent(temp))
 plot(data$CLMAGE,rstudent(temp))
-## Il y a donc des problèmes avec les postulats de base, il faut donc faire une transformation.
+## Avec ces graphiques là on voit qu'il y a des problèmes avec les postulats de base de la régression
+# Ici, on fait box cox pour trouver la transformation à appliquer sur Loss..
 
 par(mfrow = c(1,1))
-bcox <- lm(LOSS ~ CLMAGE,data = data) # On a omis les variables qualitatives pour en faire un modèle simlpe
+bcox <- lm(LOSS ~ CLMAGE,data = data) # On a omis les variables qualitatives pour en faire un modèle simple
 # avec les variables qualitatives incluts dans B0
 boxcox(bcox) # Boxcox indique lambda = 0 à 95% -> la transformation a Y à faire est log(Y)
 
@@ -72,10 +73,10 @@ plot(data$CLMAGE,log(data$LOSS))
 plot(temp$fitted.values,rstudent(temp))
 plot(data$CLMAGE,rstudent(temp))
 
-## Mon idée: faire la méthode forward ou backward sur le modèle complet plus haut pour obtenir le
-## bon modèle à utiliser 
-## On remarque que tant et aussi longtemps qu'on a des interactions, il y a multicolinéarité 
-## donc le modèle semble ne pas avoir d'interactions
+## Mon idée: Enlevé les interactions et variables du modèle complet plus bas jusqu'à ce qu'on ait
+## un modèle avec de bons vifs et ensuite faire la méthode algorithmique pour trouver le vrai modèle
+## adéquat
+
 
 #Toutes les interactions possibles...
 fit <- lm(log(LOSS)~CLMAGE + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT 
@@ -85,35 +86,31 @@ fit <- lm(log(LOSS)~CLMAGE + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT
             + MARITAL*CLMINSUR + MARITAL*SEATBELT
             +CLMINSUR*SEATBELT,data=data)
 
-## Description de ce qui est fait ici : j'enlêve les interactions jusqu'à ce que les vifs soient 
-## correcte et ensuite on fait une méthode algorithmique et on trouve le modèle final.
+## Le modele avec des vifs correctent est donc le suivant:
 fit2 <- lm(log(LOSS)~CLMAGE + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT 
            + CLMAGE*ATTORNEY + CLMAGE*CLMSEX  + CLMAGE*SEATBELT
            + ATTORNEY*CLMSEX  + ATTORNEY*SEATBELT
             + CLMSEX*SEATBELT
            ,data=data)
-#+    
+   
 vif(fit2)
+
+## Ensuite on applique les méthodes algorithmiques et on trouve que le vrai modèle est le suivant:
 formula(stepAIC(fit2,direction="both")) 
-formula(stepAIC(fit2, direction="backward"))
+formula(stepAIC(fit2, direction="backward"))# remarqué que ca donne la mm chose selon les deux méthodes...
 
 
-# Aorès avoir fait la méthode algorithmique on trouve que le meilleur modèle avec des vifs bons est 
-#suivant :
-
-
-
+## Notre modèle est donc :
 modele <- lm(log(LOSS)~CLMAGE + ATTORNEY + MARITAL + SEATBELT + 
                     CLMAGE:ATTORNEY,data=data)
 vif(modele) # meilleur modèle pour les VIFS
-# les interactions causent des problèmes de VIFs
 
-# donc analyse vif est gucci
+#Analyse vif est gucci
 
 par(mfrow = c(1,2))
 plot(data$CLMAGE,rstudent(modele),xlab="CLMAGE",main="Student")
 qqnorm(rstudent(modele))
-qqline(as.numeric(rstudent(modele)))
+qqline(as.numeric(rstudent(modele))) ## pt  que les résidus sont pas normaux .. :/ 
 
 pureErrorAnova(modele)
 
