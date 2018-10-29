@@ -66,7 +66,7 @@ hist(log(data$LOSS)) ## Un log(1+loss) pourrait être utilisé ,car fortement as
 which(data$LOSS > 1000)
 
 #data[-859,] peut être a enlevé à cause de la haute valeur
-
+#### Analyse des résidus
 ##test pour respecter les hypothèses
 temp <- lm(LOSS ~ CLMAGE ,data=data)
 plot(data$CLMAGE,data$LOSS)
@@ -90,8 +90,6 @@ plot(data$CLMAGE,rstudent(temp))
 ## bon modèle à utiliser 
 ## On remarque que tant et aussi longtemps qu'on a des interactions, il y a multicolinéarité 
 ## donc le modèle semble ne pas avoir d'interactions
-debut_fit <- lm(I(log(LOSS)) ~ CLMSEX + CLMAGE + ATTORNEY + MARITAL + CLMINSUR + 
-                  SEATBELT ,data=data) 
 #Toutes les interactions possibles...
 fit <- lm(log(LOSS)~CLMAGE + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT 
             + CLMAGE*ATTORNEY + CLMAGE*CLMSEX + CLMAGE*MARITAL + CLMAGE*CLMINSUR + CLMAGE*SEATBELT
@@ -99,23 +97,22 @@ fit <- lm(log(LOSS)~CLMAGE + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT
             + CLMSEX*MARITAL + CLMSEX*CLMINSUR + CLMSEX*SEATBELT
             + MARITAL*CLMINSUR + MARITAL*SEATBELT
             +CLMINSUR*SEATBELT,data=data)
-step1 <- stepAIC(debut_fit, direction="both")
-step2 <- stepAIC(debut_fit, direction="backward")
-step3 <- stepAIC(fit, direction="both")
-step4 <- stepAIC(fit, direction="backward")
+step1 <- stepAIC(fit, direction="both")
+step2 <- stepAIC(fit, direction="backward")
 
 
-step1$anova# mm chose
-step2$anova
-step3$anova# mm chose
-step4$anova
+formula(step1) # mm affaire
+formula(step2)# On enleve des variables jusqu'à ce que les vifs soient bons...
 
+
+# Aorès avoir fait la méthode algorithmique on trouve que le meilleur modèle avec des vifs bons est 
+#suivant :
 analyse_vif <- lm(log(LOSS)~CLMAGE + ATTORNEY + MARITAL + CLMINSUR + SEATBELT + 
                     CLMAGE:ATTORNEY,data=data)
 
 vif(analyse_vif) # meilleur modèle pour les VIFS
 # les interactions causent des problèmes de VIFs
-step5 <- stepAIC(analyse_vif, direction="both")
-step6 <- stepAIC(analyse_vif, direction="backward")
+step4 <- stepAIC(analyse_vif, direction="both")
+step5 <- stepAIC(analyse_vif, direction="backward")
 
 # donc analyse vif est gucci
