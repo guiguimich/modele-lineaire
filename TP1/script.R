@@ -84,20 +84,26 @@ fit <- lm(log(LOSS)~CLMAGE + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT
             + CLMSEX*MARITAL + CLMSEX*CLMINSUR + CLMSEX*SEATBELT
             + MARITAL*CLMINSUR + MARITAL*SEATBELT
             +CLMINSUR*SEATBELT,data=data)
-step1 <- stepAIC(fit, direction="both")
-step2 <- stepAIC(fit, direction="backward")
 
-formula(step1) # mm affaire
-formula(step2)# On enleve des variables jusqu'à ce que les vifs soient bons...
+## Description de ce qui est fait ici : j'enlêve les interactions jusqu'à ce que les vifs soient 
+## correcte et ensuite on fait une méthode algorithmique et on trouve le modèle final.
+fit2 <- lm(log(LOSS)~CLMAGE + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT 
+           + CLMAGE*ATTORNEY + CLMAGE*CLMSEX  + CLMAGE*SEATBELT
+           + ATTORNEY*CLMSEX  + ATTORNEY*SEATBELT
+            + CLMSEX*SEATBELT
+           ,data=data)
+#+    
+vif(fit2)
+formula(stepAIC(fit2,direction="both")) 
+formula(stepAIC(fit2, direction="backward"))
 
 
 # Aorès avoir fait la méthode algorithmique on trouve que le meilleur modèle avec des vifs bons est 
 #suivant :
 
 
-modele <- lm(log(LOSS)~CLMAGE + ATTORNEY + MARITAL + CLMINSUR + SEATBELT + 
+modele <- lm(log(LOSS)~CLMAGE + ATTORNEY + MARITAL + SEATBELT+
                     CLMAGE:ATTORNEY,data=data)
-
 vif(modele) # meilleur modèle pour les VIFS
 # les interactions causent des problèmes de VIFs
 
