@@ -1,5 +1,5 @@
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(ggplot2,gridExtra,MASS,car)
+pacman::p_load(ggplot2,gridExtra,MASS,car,alr3)
 
 
 # Analyse préliminaire des données ----
@@ -49,30 +49,28 @@ grid.arrange(p1,p2,p3,p4,p5, nrow = 2)
 # Modèle ----
 summary(data$LOSS)
 
-
 ## Développement pour les transformations à faire : 
-
 
 ##test pour respecter les hypothèses
 temp <- lm(LOSS ~ CLMAGE ,data=data)
+par(mfrow = c(1,3))
 plot(data$CLMAGE,data$LOSS)
 plot(temp$fitted.values,rstudent(temp))
 plot(data$CLMAGE,rstudent(temp))
 ## Il y a donc des problèmes avec les postulats de base, il faut donc faire une transformation.
 
-## Insérer ici la méthode box-Cox
+par(mfrow = c(1,1))
 bcox <- lm(LOSS ~ CLMAGE,data = data) # On a omis les variables qualitatives pour en faire un modèle simlpe
 # avec les variables qualitatives incluts dans B0
 boxcox(bcox) # Boxcox indique lambda = 0 à 95% -> la transformation a Y à faire est log(Y)
 
 # On trouve que la meilleur transformation est la logarithme:
 # Et on voit que les postulats sont respectés
+par(mfrow = c(1,3))
 temp <- lm(log(LOSS) ~ CLMAGE ,data=data)
 plot(data$CLMAGE,log(data$LOSS))
 plot(temp$fitted.values,rstudent(temp))
 plot(data$CLMAGE,rstudent(temp))
-
-
 
 ## Mon idée: faire la méthode forward ou backward sur le modèle complet plus haut pour obtenir le
 ## bon modèle à utiliser 
@@ -121,6 +119,6 @@ par(mfrow = c(1,2))
 plot(data$CLMAGE,rstudent(modele),xlab="CLMAGE",main="Student")
 qqnorm(rstudent(modele))
 qqline(as.numeric(rstudent(modele)))
-summary(modele)
 
+pureErrorAnova(modele)
 
