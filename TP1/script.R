@@ -95,21 +95,15 @@ fit2 <- lm(log(LOSS)~CLMAGE + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT
 #+    
 vif(fit2)
 formula(stepAIC(fit2,direction="both")) 
-
-step1 <- stepAIC(fit, direction="both")
-step2 <- stepAIC(fit, direction="backward")
-
-formula(step1) # mm affaire
-formula(step2)# On enleve des variables jusqu'à ce que les vifs soient bons...
+formula(stepAIC(fit2, direction="backward"))
 
 
 # Aorès avoir fait la méthode algorithmique on trouve que le meilleur modèle avec des vifs bons est 
 #suivant :
 
 
-modele <- lm(log(LOSS)~CLMAGE + ATTORNEY + MARITAL + CLMINSUR + SEATBELT + 
+modele <- lm(log(LOSS)~CLMAGE + ATTORNEY + MARITAL + SEATBELT+
                     CLMAGE:ATTORNEY,data=data)
-
 vif(modele) # meilleur modèle pour les VIFS
 # les interactions causent des problèmes de VIFs
 
