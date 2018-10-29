@@ -26,6 +26,10 @@ correction <- gsub("male*","M",data$CLMSEX)
 data$CLMSEX <- factor(correction)
 
 
+## Correction des erreurs dans CLMAGE (retrait de la ligne de l'âge 610)
+data <- data[-66,]
+
+
 # Conversion en factor de ATTORNEY,CLIMINSUR & SEATBELT
 for(i in c("ATTORNEY","CLMINSUR","SEATBELT")){
     data[[i]] <- as.factor(data[[i]])
@@ -52,65 +56,66 @@ grid.arrange(p1,p2,p3,p4,p5, nrow = 2)
 # Modèle ----
 summary(data$LOSS)
 
-boxplot(data$CLMAGE)# un age de 610 et des ages de 0 : peut être problématique
+boxplot(data$CLMAGE)# un age de 61 : peut être problématique
 boxplot(data$LOSS) # Loss de 1m très éloignée des autres, va être à regarder
 hist(log(1+data$CLMAGE)) # Un log(1+age)(car il y a des valeurs de 0) pourrait être utilisé ,car fortement asymétrique
 hist(log(data$LOSS)) ## Un log(1+loss) pourrait être utilisé ,car fortement asymétrique
 
-## Voici les 4 principaux modèles comportants toutes les interactions
-(fit1 <- lm(I(log(LOSS))~I(log(1+CLMAGE)) + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT 
+## Développement pour les transformations à faire : 
 
-                + I(log(1+CLMAGE))*ATTORNEY + I(log(1+CLMAGE))*CLMSEX + I(log(1+CLMAGE))*MARITAL + I(log(1+CLMAGE))*CLMINSUR + I(log(1+CLMAGE))*SEATBELT
-                + ATTORNEY*CLMSEX + ATTORNEY*MARITAL + ATTORNEY*CLMINSUR + ATTORNEY*SEATBELT
-                + CLMSEX*MARITAL + CLMSEX*CLMINSUR + CLMSEX*SEATBELT
-                + MARITAL*CLMINSUR + MARITAL*SEATBELT
-                +CLMINSUR*SEATBELT,data=data))
-(fit2 <- lm(LOSS~I(log(1+CLMAGE)) + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT 
-            + I(log(1+CLMAGE))*ATTORNEY + I(log(1+CLMAGE))*CLMSEX + I(log(1+CLMAGE))*MARITAL + I(log(1+CLMAGE))*CLMINSUR + I(log(1+CLMAGE))*SEATBELT
-            + ATTORNEY*CLMSEX + ATTORNEY*MARITAL + ATTORNEY*CLMINSUR + ATTORNEY*SEATBELT
-            + CLMSEX*MARITAL + CLMSEX*CLMINSUR + CLMSEX*SEATBELT
-            + MARITAL*CLMINSUR + MARITAL*SEATBELT
-            +CLMINSUR*SEATBELT,data=data))
-(fit3 <- lm(LOSS~CLMAGE + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT 
-            + CLMAGE*ATTORNEY + CLMAGE*CLMSEX + CLMAGE*MARITAL + CLMAGE*CLMINSUR + CLMAGE*SEATBELT
-            + ATTORNEY*CLMSEX + ATTORNEY*MARITAL + ATTORNEY*CLMINSUR + ATTORNEY*SEATBELT
-            + CLMSEX*MARITAL + CLMSEX*CLMINSUR + CLMSEX*SEATBELT
-            + MARITAL*CLMINSUR + MARITAL*SEATBELT
-            +CLMINSUR*SEATBELT,data=data))
-(fit4 <- lm(log(LOSS)~CLMAGE + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT 
-            + CLMAGE*ATTORNEY + CLMAGE*CLMSEX + CLMAGE*MARITAL + CLMAGE*CLMINSUR + CLMAGE*SEATBELT
-            + ATTORNEY*CLMSEX + ATTORNEY*MARITAL + ATTORNEY*CLMINSUR + ATTORNEY*SEATBELT
-            + CLMSEX*MARITAL + CLMSEX*CLMINSUR + CLMSEX*SEATBELT
-            + MARITAL*CLMINSUR + MARITAL*SEATBELT
-            +CLMINSUR*SEATBELT,data=data))
+which(data$LOSS > 1000)
+
+#data[-859,] peut être a enlevé à cause de la haute valeur
+
+##test pour respecter les hypothèses
+temp <- lm(LOSS ~ CLMAGE ,data=data)
+plot(data$CLMAGE,data$LOSS)
+plot(temp$fitted.values,rstudent(temp))
+plot(data$CLMAGE,rstudent(temp))
+## Il y a donc des problèmes avec les postulats de base, il faut donc faire une transformation.
+
+## Insérer ici la méthode box-Cox
+
+
+# On trouve que la meilleur transformation est la logarithme:
+# Et on voit que les postulats sont respectés
+temp <- lm(log(LOSS) ~ CLMAGE ,data=data)
+plot(data$CLMAGE,log(data$LOSS))
+plot(temp$fitted.values,rstudent(temp))
+plot(data$CLMAGE,rstudent(temp))
 
 
 
-#l'interaction MARITAL*SEATBELT semble ne pas fonctionner
 ## Mon idée: faire la méthode forward ou backward sur le modèle complet plus haut pour obtenir le
 ## bon modèle à utiliser 
 ## On remarque que tant et aussi longtemps qu'on a des interactions, il y a multicolinéarité 
 ## donc le modèle semble ne pas avoir d'interactions
-
-
-step1 <- stepAIC(fit1, direction="both")
-step2 <- stepAIC(fit1, direction="forward")
-step3 <- stepAIC(fit1, direction="backward")
-debut_fit <- lm(I(log(LOSS)) ~ I(log(1 + CLMAGE)) + ATTORNEY + MARITAL + CLMINSUR + 
+debut_fit <- lm(I(log(LOSS)) ~ CLMSEX + CLMAGE + ATTORNEY + MARITAL + CLMINSUR + 
                   SEATBELT ,data=data) 
-
+#Toutes les interactions possibles...
+fit <- lm(log(LOSS)~CLMAGE + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT 
+            + CLMAGE*ATTORNEY + CLMAGE*CLMSEX + CLMAGE*MARITAL + CLMAGE*CLMINSUR + CLMAGE*SEATBELT
+            + ATTORNEY*CLMSEX + ATTORNEY*MARITAL + ATTORNEY*CLMINSUR + ATTORNEY*SEATBELT
+            + CLMSEX*MARITAL + CLMSEX*CLMINSUR + CLMSEX*SEATBELT
+            + MARITAL*CLMINSUR + MARITAL*SEATBELT
+            +CLMINSUR*SEATBELT,data=data)
 step1 <- stepAIC(debut_fit, direction="both")
-step2 <- stepAIC(debut_fit, direction="forward")
-step3 <- stepAIC(debut_fit, direction="backward")
-
-test1 <- lm(formula(step1),data=data)
-test2 <- lm(formula(step2),data=data)
-
-summary(test1)
-summary(test2)### regarder si ca vaut la peine de garder CLMINSUR
+step2 <- stepAIC(debut_fit, direction="backward")
+step3 <- stepAIC(fit, direction="both")
+step4 <- stepAIC(fit, direction="backward")
 
 
-vif(good_fit1) # meilleur modèle pour les VIFS
+step1$anova# mm chose
+step2$anova
+step3$anova# mm chose
+step4$anova
+
+analyse_vif <- lm(log(LOSS)~CLMAGE + ATTORNEY + MARITAL + CLMINSUR + SEATBELT + 
+                    CLMAGE:ATTORNEY,data=data)
+
+vif(analyse_vif) # meilleur modèle pour les VIFS
 # les interactions causent des problèmes de VIFs
+step5 <- stepAIC(analyse_vif, direction="both")
+step6 <- stepAIC(analyse_vif, direction="backward")
 
-
+# donc analyse vif est gucci
