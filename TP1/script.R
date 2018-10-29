@@ -114,7 +114,12 @@ par(mfrow = c(1,2))
 plot(data$CLMAGE,rstudent(modele),xlab="CLMAGE",main="Student")
 qqnorm(rstudent(modele))
 qqline(as.numeric(rstudent(modele)))
-
+as.data.frame(summary(modele))
 pureErrorAnova(modele)
+
+
+data.frame(unclass(summary(modele)), check.names = FALSE, stringsAsFactors = FALSE)
+
+modele$coefficients
 
 #
