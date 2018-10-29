@@ -86,6 +86,18 @@ fit <- lm(log(LOSS)~CLMAGE + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT
             + CLMSEX*MARITAL + CLMSEX*CLMINSUR + CLMSEX*SEATBELT
             + MARITAL*CLMINSUR + MARITAL*SEATBELT
             +CLMINSUR*SEATBELT,data=data)
+
+## Description de ce qui est fait ici : j'enlêve les interactions jusqu'à ce que les vifs soient 
+## correcte et ensuite on fait une méthode algorithmique et on trouve le modèle final.
+fit2 <- lm(log(LOSS)~CLMAGE + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT 
+           + CLMAGE*ATTORNEY + CLMAGE*CLMSEX  + CLMAGE*SEATBELT
+           + ATTORNEY*CLMSEX  + ATTORNEY*SEATBELT
+            + CLMSEX*SEATBELT
+           ,data=data)
+#+    
+vif(fit2)
+formula(stepAIC(fit2,direction="both")) 
+
 step1 <- stepAIC(fit, direction="both")
 step2 <- stepAIC(fit, direction="backward")
 
