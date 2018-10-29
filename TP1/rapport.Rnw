@@ -50,6 +50,9 @@
 \documentclass{article}
 
 \usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{caption}
+\captionsetup[table]{name=Tableau}
 \usepackage{url}
 \usepackage[toc,page]{appendix}
 \renewcommand{\appendixpagename}{Annexes}
@@ -95,38 +98,35 @@
 
 \section{Analyse des données} 
 \label{sec:analyse}
-Pour le moment, j'ai juste foutu tous les graphiques disponibles. Aucune structure.
 
 Voici les variables disponibles afin d'effectuer un modèle prédictif de la perte économique:
 
-\begin{table}[htb]
+\begin{table}[htbp]
+\centering
 \caption{Description des variables}
-\begin{tabular}{lll}
+\begin{tabular}{|llp{0.5\linewidth}|}
 \hline
 \textbf{Variables} & \textbf{Type}        & \textbf{Description}                                         \\ \hline
-CASENUM            & Valeur entière       & Numéro d'identification de la réclamation                    \\ \hline
-ATTORNEY           & Variable indicatrice & Indique si le réclamant est représenté par un avocat         \\ \hline
-CLMSEX             & Variable indicatrice & Indique le sexe du réclamant                                 \\ \hline
-MARITAL            & Variable polytomique & Indique le statut marital du réclamant                       \\ \hline
-CLMINSUR           & Variable polytomique & Indique si le réclamant est assuré                           \\ \hline
-SEATBELT           & Variable polytomique & Indique si le réclamant portait une ceinture de sécurité     \\ \hline
-CLMAGE             & Valeur entière       & Âge du réclamant                                             \\ \hline
-LOSS               & Valeur continue      & Perte économique totale du réclamant  en milliers de dollars \\ \hline
+\textsc{Casenum}            & Valeur entière       & Numéro d'identification de la réclamation                    \\ \hline
+\textsc{Attorney}           & Variable indicatrice & Indique si le réclamant est représenté par un avocat         \\ \hline
+\textsc{Clmsex}             & Variable indicatrice & Indique le sexe du réclamant                                 \\ \hline
+\textsc{Marital}             & Variable polytomique & Indique le statut marital du réclamant                       \\ \hline
+\textsc{Clminsur}            & Variable polytomique & Indique si le réclamant est assuré                           \\ \hline
+\textsc{Seatbelt}            & Variable polytomique & Indique si le réclamant portait une ceinture de sécurité     \\ \hline
+\textsc{Clmage}              & Valeur entière       & Âge du réclamant                                             \\ \hline
+\textsc{Loss}                & Valeur continue      & Perte économique totale du réclamant  en milliers de dollars \\ \hline
 \end{tabular}
 \end{table}
 
 \newpage
+Ces variables sont en majorité qualitative. Une analyse de fréquences de celles-ci permet d'avoir un meilleur ressenti quant à leurs interaction avec la variable exogène \textsc{Loss}:\\
 <<echo = FALSE>>=
 grid.arrange(p1,p2,p3,p4,p5, nrow = 3)
 @
 
+
 <<echo = FALSE>>=
 summary(data[,7:8])
-par(mfrow=c(2,2))
-boxplot(log(1+data$CLMAGE))
-boxplot(log(data$LOSS))
-hist(log(1+data$CLMAGE))
-hist(log(data$LOSS))
 @
 
 
@@ -160,8 +160,44 @@ hist(log(data$LOSS))
 
 \begin{appendices}
 \section{Erreurs de données}
+\label{annex:error}
+La base de données originelles utilisé dans la création du modèle a dû subir quelques modifications afin d'être utilisable. Voici les quelques erreurs répertoriés ainsi que les techniques utilisés pour les rectifier:
+\begin{enumerate}
+\item Fautes d'ortographe
+\begin{enumerate}
+\item MARITAL\\
+Cette colonne contient à l'origine plusieurs faute de frappes des états maritaux. Afin d'unifier le tout, il a fallut substituer les états dans ces quatres variables distinctes : \textit{divorced, widowed, married, single}.
+\item CLMSEX\\
+Cette colonne supposé contenir les états \textbf{F} ou \textbf{M} contient à l'origine quelques états \textit{male}. Afin d'unifier le tout, ces états ont été substituer en \textbf{M}.
+\end{enumerate}
+\item Données aberrantes
+\begin{enumerate}
+\item LOSS\\
+% À débattre.
+Cette colonne contient une valeur très extrême de \textit{1067.697}. En analysant le boxplot ci-dessous, on voit bien que la valeur est très énorme à comparer au reste. Ainsi, la ligne contenant cette valeur a été retiré afin de préserver au mieux les données jugés adéquates.\\
+
+<<echo = FALSE,fig.cap="\\label{fig:figs}Boxplot de LOSS">>=
+ggplot(data, aes(y = LOSS)) +
+    geom_boxplot() + geom_point(data=data.frame(x=0,y=max(data$LOSS)), size = 3,aes(x=x,y=y),colour="red")
+
+@
+
+\item CLMAGE\\
+Cette colonne contient une valeur de \textit{610}, valeur impossible selon la description de la variable, soit l'âge du réclamant. Afin de ne pas fausser les résultat, la ligne contenant cette valeur a été retiré.
+\end{enumerate}
+\end{enumerate}
+
 
 \section{Transformation}
+\label{annex:transfo}
+<<echo = FALSE>>=
+par(mfrow=c(2,2))
+hist(data$CLMAGE)
+hist(log(1+data$CLMAGE))
+hist(data$LOSS)
+hist(log(data$LOSS))
+@
+
 
 \section{Sélection des variables}
 \end{appendices}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2018.1.19)  28 OCT 2018 12:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2018.1.19)  29 OCT 2018 12:25
 entering extended mode
 **./rapport.tex
 (rapport.tex
@@ -396,16 +396,81 @@ Now handling font encoding U ...
    defining Unicode char U+2026 (decimal 8230)
    defining Unicode char U+2122 (decimal 8482)
    defining Unicode char U+2423 (decimal 9251)
-)) ("C:\Users\olivi\AppData\Local\Programs\MiKTeX 2.9\tex\latex\url\url.sty"
+)) ("C:\Users\olivi\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\babel.s
+ty"
+Package: babel 2017/05/19 3.10 The Babel package
+
+*************************************
+* Local config file bblopts.cfg used
+*
+("C:\Users\olivi\AppData\Local\Programs\MiKTeX 2.9\tex\latex\arabi\bblopts.cfg"
+File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
+ babel
+)
+("C:\Users\olivi\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel-french\fre
+nchb.ldf"
+Language: frenchb 2017/04/30 v3.3a French support from the babel system
+
+("C:\Users\olivi\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\babel.def"
+File: babel.def 2017/05/19 3.10 Babel common definitions
+\babel@savecnt=\count88
+\U@D=\dimen109
+)
+\l@acadian = a dialect from \language\l@french 
+\l@canadien = a dialect from \language\l@french 
+\FB@nonchar=\count89
+\FBcolonsp=\toks17
+\FBthinsp=\toks18
+Package babel Info: Making : an active character on input line 362.
+Package babel Info: Making ; an active character on input line 363.
+Package babel Info: Making ! an active character on input line 364.
+Package babel Info: Making ? an active character on input line 365.
+\FBguillsp=\toks19
+\FBguill@level=\count90
+\FB@everypar=\toks20
+\FB@Mht=\dimen110
+\mc@charclass=\count91
+\mc@charfam=\count92
+\mc@charslot=\count93
+\std@mcc=\count94
+\dec@mcc=\count95
+\listindentFB=\skip44
+\descindentFB=\skip45
+\labelwidthFB=\skip46
+\leftmarginFB=\skip47
+\parindentFFN=\dimen111
+\FBfnindent=\skip48
+))
+("C:\Users\olivi\AppData\Local\Programs\MiKTeX 2.9\tex\latex\carlisle\scalefnt.
+sty")
+("C:\Users\olivi\AppData\Local\Programs\MiKTeX 2.9\tex\latex\caption\caption.st
+y"
+Package: caption 2018/10/06 v3.3-154 Customizing captions (AR)
+
+("C:\Users\olivi\AppData\Local\Programs\MiKTeX 2.9\tex\latex\caption\caption3.s
+ty"
+Package: caption3 2018/09/12 v1.8c caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 64.
+\captionmargin=\dimen112
+\captionmargin@=\dimen113
+\captionwidth=\dimen114
+\caption@tempdima=\dimen115
+\caption@indent=\dimen116
+\caption@parindent=\dimen117
+\caption@hangindent=\dimen118
+)
+\c@caption@flags=\count96
+\c@ContinuedFloat=\count97
+) ("C:\Users\olivi\AppData\Local\Programs\MiKTeX 2.9\tex\latex\url\url.sty"
 \Urlmuskip=\muskip10
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 ("C:\Users\olivi\AppData\Local\Programs\MiKTeX 2.9\tex\latex\appendix\appendix.
 sty"
 Package: appendix 2009/09/02 v1.2b extra appendix facilities
-\c@@pps=\count88
-\c@@ppsavesec=\count89
-\c@@ppsaveapp=\count90
+\c@@pps=\count98
+\c@@ppsavesec=\count99
+\c@@ppsaveapp=\count100
 )
 ("C:\Users\olivi\AppData\Local\Programs\MiKTeX 2.9\tex\latex\upquote\upquote.st
 y"
@@ -418,33 +483,33 @@ LaTeX Warning: Label `sec:analyse' multiply defined.
 )
 \openout1 = `rapport.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 72.
-LaTeX Font Info:    ... okay on input line 72.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 72.
-LaTeX Font Info:    ... okay on input line 72.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 72.
-LaTeX Font Info:    ... okay on input line 72.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 72.
-LaTeX Font Info:    ... okay on input line 72.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 72.
-LaTeX Font Info:    ... okay on input line 72.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 72.
-LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
 
 ("C:\Users\olivi\AppData\Local\Programs\MiKTeX 2.9\tex\context\base\supp-pdf.mk
 ii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count91
-\scratchdimen=\dimen109
+\scratchcounter=\count101
+\scratchdimen=\dimen119
 \scratchbox=\box26
-\nofMPsegments=\count92
-\nofMParguments=\count93
-\everyMPshowfont=\toks17
-\MPscratchCnt=\count94
-\MPscratchDim=\dimen110
-\MPnumerator=\count95
-\makeMPintoPDFobject=\count96
-\everyMPtoPDFconversion=\toks18
+\nofMPsegments=\count102
+\nofMParguments=\count103
+\everyMPshowfont=\toks21
+\MPscratchCnt=\count104
+\MPscratchDim=\dimen120
+\MPnumerator=\count105
+\makeMPintoPDFobject=\count106
+\everyMPtoPDFconversion=\toks22
 )
 ("C:\Users\olivi\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\pdftexc
 mds.sty"
@@ -499,73 +564,100 @@ Package grfext Info: Graphics extension search list:
 (grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
-) [1
+)
+LaTeX Info: Redefining \degres on input line 75.
+LaTeX Info: Redefining \dots on input line 75.
+LaTeX Info: Redefining \up on input line 75.
 
-{C:/Users/olivi/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2] (rappor
-t.toc
+
+Package frenchb.ldf Warning: OT1 encoding should not be used for French.
+(frenchb.ldf)                Add \usepackage[T1]{fontenc} to the preamble
+(frenchb.ldf)                of your document; reported on input line 75.
+
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: End \AtBeginDocument code.
+[1
+
+{C:/Users/olivi/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2]
+(rapport.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 4.
+(Font)              <7> on input line 5.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 4.
+(Font)              <5> on input line 5.
 )
 \tf@toc=\write3
 \openout3 = `rapport.toc'.
 
  [3]
-Overfull \hbox (103.33412pt too wide) in paragraph at lines 118--130
-[][] 
+Underfull \hbox (badness 10000) in paragraph at lines 124--124
+[]\OT1/cmr/m/n/10 Numero d'iden-ti-fi-ca-tion de la
+ []
+
+
+Overfull \hbox (6.64719pt too wide) in paragraph at lines 121--133
+ [][] 
  []
 
 [4]
-Package color Info: Redefining color shadecolor on input line 134.
+Package color Info: Redefining color shadecolor on input line 138.
  <figure/unnamed-chunk-2-1.pdf, id=19, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-2-1.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-2-1.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-2-1.pdf used on input line 135.
+Package pdftex.def Info: figure/unnamed-chunk-2-1.pdf used on input line 139.
+(pdftex.def)             Requested size: 345.0pt x 345.00414pt.
+Package color Info: Redefining color shadecolor on input line 145.
+ [5 <./figure/unnamed-chunk-2-1.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 201--204
+
+ []
+
+Package color Info: Redefining color shadecolor on input line 206.
+<figure/unnamed-chunk-4-1.pdf, id=29, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-4-1.pdf Graphic file (type pdf)
+
+<use figure/unnamed-chunk-4-1.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-4-1.pdf used on input line 207.
+(pdftex.def)             Requested size: 345.0pt x 345.00414pt.
+ [6] [7 <./figure/unnamed-chunk-4-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 222.
+
+<figure/unnamed-chunk-5-1.pdf, id=43, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-5-1.pdf Graphic file (type pdf)
+
+<use figure/unnamed-chunk-5-1.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-5-1.pdf used on input line 223.
 (pdftex.def)             Requested size: 345.0pt x 345.00414pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 135--136
+Overfull \hbox (15.0pt too wide) in paragraph at lines 223--224
 [][] 
  []
 
-Package color Info: Redefining color shadecolor on input line 140.
-<figure/unnamed-chunk-3-1.pdf, id=20, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-3-1.pdf Graphic file (type pdf)
-
-<use figure/unnamed-chunk-3-1.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-3-1.pdf used on input line 151.
-(pdftex.def)             Requested size: 345.0pt x 345.00414pt.
-
-Overfull \hbox (15.0pt too wide) in paragraph at lines 151--152
-[][] 
- []
-
-[5 <./figure/unnamed-chunk-2-1.pdf>] [6 <./figure/unnamed-chunk-3-1.pdf>]
-[7] (rapport.aux)
+[8 <./figure/unnamed-chunk-5-1.pdf>] (rapport.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 2128 strings out of 493323
- 29805 string characters out of 3130015
- 89109 words of memory out of 3000000
- 5639 multiletter control sequences out of 15000+200000
- 7140 words of font info for 26 fonts, out of 3000000 for 9000
+ 4385 strings out of 493323
+ 66690 string characters out of 3130015
+ 135163 words of memory out of 3000000
+ 7870 multiletter control sequences out of 15000+200000
+ 7486 words of font info for 27 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,9n,25p,287b,212s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 39i,11n,39p,322b,521s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/olivi/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts
 /cm/cmbx10.pfb><C:/Users/olivi/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
 blic/amsfonts/cm/cmbx12.pfb><C:/Users/olivi/AppData/Local/Programs/MiKTeX 2.9/f
 onts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/olivi/AppData/Local/Program
 s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/olivi/AppData/L
 ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/oli
-vi/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-
-Output written on rapport.pdf (7 pages, 111572 bytes).
+vi/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+<C:/Users/olivi/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/c
+m/cmtt10.pfb>
+Output written on rapport.pdf (8 pages, 136073 bytes).
 PDF statistics:
- 63 PDF objects out of 1000 (max. 8388607)
+ 76 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

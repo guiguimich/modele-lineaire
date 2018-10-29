@@ -1,9 +1,6 @@
 if (!require("pacman")) install.packages("pacman")
-<<<<<<< HEAD
-pacman::p_load(ggplot2,reshape2,gridExtra,MASS)
-=======
 pacman::p_load(ggplot2,gridExtra,MASS,car)
->>>>>>> 33595c5a5592c6e4aa4551884b032ba79fd7eb9a
+
 
 # Analyse préliminaire des données ----
 data <- read.csv("AutoBodyInjury.csv",sep = ";")
@@ -12,6 +9,14 @@ tail(sort(data$LOSS),5)
 str(data)
 summary(data[,7:8])
 ## Correction des erreurs dans MARITAL
+boxplot(data$LOSS)
+p7 <- ggplot(data, aes(x = Month, y = Ozone)) +
+    geom_boxplot()
+par(mfrow = c(1,2))
+t <- head(sort(data$LOSS),-1)
+boxplot(t)
+hist(log(t))
+hist(log(data$LOSS))
 correction <- gsub("ma.*","married",data$MARITAL)
 correction <- gsub("si.*","single",correction)
 data$MARITAL <- factor(correction)
@@ -104,7 +109,7 @@ test2 <- lm(formula(step2),data=data)
 summary(test1)
 summary(test2)### regarder si ca vaut la peine de garder CLMINSUR
 
-library(car)
+
 vif(good_fit1) # meilleur modèle pour les VIFS
 # les interactions causent des problèmes de VIFs
 
