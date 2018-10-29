@@ -89,16 +89,19 @@ fit <- lm(log(LOSS)~CLMAGE + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT
 step1 <- stepAIC(fit, direction="both")
 step2 <- stepAIC(fit, direction="backward")
 
-step1$anova# mm chose
-step2$anova
+formula(step1) # mm affaire
+formula(step2)# On enleve des variables jusqu'à ce que les vifs soient bons...
+
+
+# Aorès avoir fait la méthode algorithmique on trouve que le meilleur modèle avec des vifs bons est 
+#suivant :
+
 
 modele <- lm(log(LOSS)~CLMAGE + ATTORNEY + MARITAL + CLMINSUR + SEATBELT + 
                     CLMAGE:ATTORNEY,data=data)
 
 vif(modele) # meilleur modèle pour les VIFS
 # les interactions causent des problèmes de VIFs
-step3 <- stepAIC(modele, direction="both")
-step4 <- stepAIC(modele, direction="backward")
 
 # donc analyse vif est gucci
 
