@@ -4,19 +4,9 @@ pacman::p_load(ggplot2,gridExtra,MASS,car)
 
 # Analyse préliminaire des données ----
 data <- read.csv("AutoBodyInjury.csv",sep = ";")
-tail(sort(data$CLMAGE),5) 
-tail(sort(data$LOSS),5)
-str(data)
+
 summary(data[,7:8])
 ## Correction des erreurs dans MARITAL
-boxplot(data$LOSS)
-p7 <- ggplot(data, aes(x = Month, y = Ozone)) +
-    geom_boxplot()
-par(mfrow = c(1,2))
-t <- head(sort(data$LOSS),-1)
-boxplot(t)
-hist(log(t))
-hist(log(data$LOSS))
 correction <- gsub("ma.*","married",data$MARITAL)
 correction <- gsub("si.*","single",correction)
 data$MARITAL <- factor(correction)
@@ -25,6 +15,8 @@ data$MARITAL <- factor(correction)
 correction <- gsub("male*","M",data$CLMSEX)
 data$CLMSEX <- factor(correction)
 
+## Correction des erreurs dans CLMAGE
+data <- data[-66,]
 
 ## Correction des erreurs dans CLMAGE (retrait de la ligne de l'âge 610)
 data <- data[-66,]
@@ -34,6 +26,7 @@ data <- data[-66,]
 for(i in c("ATTORNEY","CLMINSUR","SEATBELT")){
     data[[i]] <- as.factor(data[[i]])
 }
+
 #sapply(data,class)
 
 # Création du plot des fréquences ----
@@ -56,17 +49,10 @@ grid.arrange(p1,p2,p3,p4,p5, nrow = 2)
 # Modèle ----
 summary(data$LOSS)
 
-boxplot(data$CLMAGE)# un age de 61 : peut être problématique
-boxplot(data$LOSS) # Loss de 1m très éloignée des autres, va être à regarder
-hist(log(1+data$CLMAGE)) # Un log(1+age)(car il y a des valeurs de 0) pourrait être utilisé ,car fortement asymétrique
-hist(log(data$LOSS)) ## Un log(1+loss) pourrait être utilisé ,car fortement asymétrique
 
 ## Développement pour les transformations à faire : 
 
-which(data$LOSS > 1000)
 
-#data[-859,] peut être a enlevé à cause de la haute valeur
-#### Analyse des résidus
 ##test pour respecter les hypothèses
 temp <- lm(LOSS ~ CLMAGE ,data=data)
 plot(data$CLMAGE,data$LOSS)
@@ -75,7 +61,9 @@ plot(data$CLMAGE,rstudent(temp))
 ## Il y a donc des problèmes avec les postulats de base, il faut donc faire une transformation.
 
 ## Insérer ici la méthode box-Cox
-
+bcox <- lm(LOSS ~ CLMAGE,data = data) # On a omis les variables qualitatives pour en faire un modèle simlpe
+# avec les variables qualitatives incluts dans B0
+boxcox(bcox) # Boxcox indique lambda = 0 à 95% -> la transformation a Y à faire est log(Y)
 
 # On trouve que la meilleur transformation est la logarithme:
 # Et on voit que les postulats sont respectés
@@ -90,6 +78,7 @@ plot(data$CLMAGE,rstudent(temp))
 ## bon modèle à utiliser 
 ## On remarque que tant et aussi longtemps qu'on a des interactions, il y a multicolinéarité 
 ## donc le modèle semble ne pas avoir d'interactions
+
 #Toutes les interactions possibles...
 fit <- lm(log(LOSS)~CLMAGE + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT 
             + CLMAGE*ATTORNEY + CLMAGE*CLMSEX + CLMAGE*MARITAL + CLMAGE*CLMINSUR + CLMAGE*SEATBELT
@@ -100,19 +89,26 @@ fit <- lm(log(LOSS)~CLMAGE + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT
 step1 <- stepAIC(fit, direction="both")
 step2 <- stepAIC(fit, direction="backward")
 
-
 formula(step1) # mm affaire
 formula(step2)# On enleve des variables jusqu'à ce que les vifs soient bons...
 
 
 # Aorès avoir fait la méthode algorithmique on trouve que le meilleur modèle avec des vifs bons est 
 #suivant :
-analyse_vif <- lm(log(LOSS)~CLMAGE + ATTORNEY + MARITAL + CLMINSUR + SEATBELT + 
+
+
+modele <- lm(log(LOSS)~CLMAGE + ATTORNEY + MARITAL + CLMINSUR + SEATBELT + 
                     CLMAGE:ATTORNEY,data=data)
 
-vif(analyse_vif) # meilleur modèle pour les VIFS
+vif(modele) # meilleur modèle pour les VIFS
 # les interactions causent des problèmes de VIFs
-step4 <- stepAIC(analyse_vif, direction="both")
-step5 <- stepAIC(analyse_vif, direction="backward")
 
 # donc analyse vif est gucci
+
+par(mfrow = c(1,2))
+plot(data$CLMAGE,rstudent(modele),xlab="CLMAGE",main="Student")
+qqnorm(rstudent(modele))
+qqline(as.numeric(rstudent(modele)))
+summary(modele)
+
+
