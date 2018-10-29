@@ -18,6 +18,10 @@ data$CLMSEX <- factor(correction)
 ## Correction des erreurs dans CLMAGE
 data <- data[-66,]
 
+## Correction des erreurs dans CLMAGE (retrait de la ligne de l'âge 610)
+data <- data[-66,]
+
+
 # Conversion en factor de ATTORNEY,CLIMINSUR & SEATBELT
 for(i in c("ATTORNEY","CLMINSUR","SEATBELT")){
     data[[i]] <- as.factor(data[[i]])
@@ -44,39 +48,64 @@ grid.arrange(p1,p2,p3,p4,p5, nrow = 2)
 
 # Modèle ----
 summary(data$LOSS)
+
+
+## Développement pour les transformations à faire : 
+
+
+##test pour respecter les hypothèses
+temp <- lm(LOSS ~ CLMAGE ,data=data)
+plot(data$CLMAGE,data$LOSS)
+plot(temp$fitted.values,rstudent(temp))
+plot(data$CLMAGE,rstudent(temp))
+## Il y a donc des problèmes avec les postulats de base, il faut donc faire une transformation.
+
+## Insérer ici la méthode box-Cox
 bcox <- lm(LOSS ~ CLMAGE,data = data) # On a omis les variables qualitatives pour en faire un modèle simlpe
 # avec les variables qualitatives incluts dans B0
 boxcox(bcox) # Boxcox indique lambda = 0 à 95% -> la transformation a Y à faire est log(Y)
 
-modele1 <- lm(I(log(LOSS)) ~ CLMAGE + ATTORNEY  + SEATBELT + MARITAL + CLMSEX + CLMINSUR,data = data)
-par(mfrow = c(1,1))
-plot(data$CLMAGE,rstudent(modele1),xlab="Me lost",main="Please, mean = 0 ")
-summary(modele1)
-vif(modele1)
-AIC_m1 <- stepAIC(modele1, direction="both")
-modele1_mod <- lm(formula(AIC_m1),data = data)
-summary(modele1_mod)
-plot(data$CLMAGE,rstudent(modele1_mod),xlab="CLMAGE",main="Résidus studentisé en fonction de CLMAGE")
-qqnorm(rstudent(modele1_mod))
-qqline(as.numeric(rstudent(modele1_mod)))
-
-modele2 <- lm(log(LOSS) ~ CLMAGE + ATTORNEY + MARITAL + SEATBELT + CLMAGE:ATTORNEY,data = data)
-par(mfrow = c(1,1))
-summary(modele2)
-vif(modele2)
-AIC_m2 <- stepAIC(modele2, direction="both")
-modele2_mod <- lm(formula(AIC_m2),data = data)
-summary(modele2_mod)
-plot(data$CLMAGE,rstudent(modele2_mod),xlab="CLMAGE",main="Résidus studentisé en fonction de CLMAGE")
-qqnorm(rstudent(modele2_mod))
-qqline(as.numeric(rstudent(modele2_mod)))
+# On trouve que la meilleur transformation est la logarithme:
+# Et on voit que les postulats sont respectés
+temp <- lm(log(LOSS) ~ CLMAGE ,data=data)
+plot(data$CLMAGE,log(data$LOSS))
+plot(temp$fitted.values,rstudent(temp))
+plot(data$CLMAGE,rstudent(temp))
 
 
-verif <- function(modele){
-    par(mfrow = c(1,2))
-    plot(data$CLMAGE,rstudent(modele),xlab="CLMAGE",main="Student")
-    qqnorm(rstudent(modele))
-    qqline(as.numeric(rstudent(modele)))
-    summary(modele)
-}
-verif(lm(log(LOSS) ~ CLMAGE + ATTORNEY + MARITAL + SEATBELT + CLMAGE:ATTORNEY,data = data))
+
+## Mon idée: faire la méthode forward ou backward sur le modèle complet plus haut pour obtenir le
+## bon modèle à utiliser 
+## On remarque que tant et aussi longtemps qu'on a des interactions, il y a multicolinéarité 
+## donc le modèle semble ne pas avoir d'interactions
+
+#Toutes les interactions possibles...
+fit <- lm(log(LOSS)~CLMAGE + ATTORNEY + CLMSEX + MARITAL + CLMINSUR + SEATBELT 
+            + CLMAGE*ATTORNEY + CLMAGE*CLMSEX + CLMAGE*MARITAL + CLMAGE*CLMINSUR + CLMAGE*SEATBELT
+            + ATTORNEY*CLMSEX + ATTORNEY*MARITAL + ATTORNEY*CLMINSUR + ATTORNEY*SEATBELT
+            + CLMSEX*MARITAL + CLMSEX*CLMINSUR + CLMSEX*SEATBELT
+            + MARITAL*CLMINSUR + MARITAL*SEATBELT
+            +CLMINSUR*SEATBELT,data=data)
+step1 <- stepAIC(fit, direction="both")
+step2 <- stepAIC(fit, direction="backward")
+
+step1$anova# mm chose
+step2$anova
+
+modele <- lm(log(LOSS)~CLMAGE + ATTORNEY + MARITAL + CLMINSUR + SEATBELT + 
+                    CLMAGE:ATTORNEY,data=data)
+
+vif(modele) # meilleur modèle pour les VIFS
+# les interactions causent des problèmes de VIFs
+step3 <- stepAIC(modele, direction="both")
+step4 <- stepAIC(modele, direction="backward")
+
+# donc analyse vif est gucci
+
+par(mfrow = c(1,2))
+plot(data$CLMAGE,rstudent(modele),xlab="CLMAGE",main="Student")
+qqnorm(rstudent(modele))
+qqline(as.numeric(rstudent(modele)))
+summary(modele)
+
+
