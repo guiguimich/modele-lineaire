@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2018.1.19)  29 OCT 2018 17:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2018.1.19)  29 OCT 2018 19:18
 entering extended mode
 **./rapport.tex
 (rapport.tex
@@ -667,33 +667,32 @@ Package pdftex.def Info: figure/unnamed-chunk-2-1.pdf used on input line 140.
 (pdftex.def)             Requested size: 345.0pt x 345.00414pt.
 Package color Info: Redefining color shadecolor on input line 146.
  [5 <./figure/unnamed-chunk-2-1.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 209--212
+[6]
+Underfull \hbox (badness 10000) in paragraph at lines 212--215
 
  []
 
-[6]
-Package color Info: Redefining color shadecolor on input line 214.
- <figure/unnamed-chunk-4-1.pdf, id=37, 505.89pt x 505.89pt>
+Package color Info: Redefining color shadecolor on input line 217.
+<figure/unnamed-chunk-4-1.pdf, id=37, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-4-1.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-4-1.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-4-1.pdf used on input line 215.
+Package pdftex.def Info: figure/unnamed-chunk-4-1.pdf used on input line 218.
 (pdftex.def)             Requested size: 345.0pt x 345.00414pt.
-Package color Info: Redefining color shadecolor on input line 230.
-
-<figure/unnamed-chunk-5-1.pdf, id=38, 505.89pt x 505.89pt>
+Package color Info: Redefining color shadecolor on input line 233.
+ [7 <./figure/unnamed-chunk-4-1.pdf>]
+<figure/unnamed-chunk-5-1.pdf, id=47, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-5-1.pdf Graphic file (type pdf)
 
 <use figure/unnamed-chunk-5-1.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-5-1.pdf used on input line 231.
+Package pdftex.def Info: figure/unnamed-chunk-5-1.pdf used on input line 234.
 (pdftex.def)             Requested size: 345.0pt x 345.00414pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 231--232
+Overfull \hbox (15.0pt too wide) in paragraph at lines 234--235
 [][] 
  []
 
-[7 <./figure/unnamed-chunk-4-1.pdf>] [8 <./figure/unnamed-chunk-5-1.pdf>]
-(rapport.aux)
+[8 <./figure/unnamed-chunk-5-1.pdf>] (rapport.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -719,7 +718,7 @@ c/amsfonts/cm/cmr7.pfb><C:/Users/olivi/AppData/Local/Programs/MiKTeX 2.9/fonts/
 type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/olivi/AppData/Local/Programs/MiKT
 eX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/olivi/AppData/Local/
 Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on rapport.pdf (8 pages, 173193 bytes).
+Output written on rapport.pdf (8 pages, 176764 bytes).
 PDF statistics:
  92 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

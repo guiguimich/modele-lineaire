@@ -119,6 +119,6 @@ pureErrorAnova(modele)
 
 data.frame(unclass(summary(modele)), check.names = FALSE, stringsAsFactors = FALSE)
 
-modele$coefficients
-
+m <- summary(modele)
+coef <- m$coefficients[,1]
 #

@@ -168,12 +168,15 @@ $$
 \begin{aligned}
 \ln Y  = & \beta_0 + \beta_1x_{i,CLMAGE} + \beta_2x_{i,ATTORNEY} + \beta_{3,1}x_{i,MARITAL,2} + \\ 
 & \beta_{3,2}x_{i,MARITAL,3} + \beta_{3,3}x_{i,MARITAL,4} + \beta_4x_{i,SEATBELT} + \\ 
-& \beta_5x_{i,CLMAGE}*x_{i,ATTORNEY}\\
+& \beta_5x_{i,CLMAGE}*
+x_{i,ATTORNEY}\\
 \end{aligned}
 $$
-\subsection{Variables qualitatives}
+\subsection{Traitement des variables qualitatives}
 \label{ssec:var_qual}
-
+Les variables qualitatives du modèle, soit \textit{ATTORNEY, SEATBELT et MARITAL} ont chacune
+été converti en \textit{factor} car c'est le type de données usuelle de R afin d'effectuer des
+régression linéaire comportant des variables qualitatives.
 \subsection{Interactions}
 \label{ssec:interaction}
 

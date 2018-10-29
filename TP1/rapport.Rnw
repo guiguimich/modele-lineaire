@@ -148,7 +148,9 @@ x_{i,ATTORNEY}\\
 $$
 \subsection{Traitement des variables qualitatives}
 \label{ssec:var_qual}
-Les variables qualitatives du modèle, soit \texit{ATTORNEY, SEATBELT et MARITAL} ont chacune été converti en \textit{factor} car c'est le type de données usuelle de R afin d'effectuer des régression linéaire comportant des variables qualitatives.
+Les variables qualitatives du modèle, soit \textit{ATTORNEY, SEATBELT et MARITAL} ont chacune
+été converti en \textit{factor} car c'est le type de données usuelle de R afin d'effectuer des
+régression linéaire comportant des variables qualitatives.
 \subsection{Interactions}
 \label{ssec:interaction}
 
