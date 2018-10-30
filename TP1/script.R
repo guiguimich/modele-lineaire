@@ -114,6 +114,7 @@ pureErrorAnova(modele)
 
 m <- summary(modele)
 coef <- m$coefficients[,1]
+<<<<<<< HEAD
 std <- m$coefficients[,2]
 n_p <- m$df[2]
 coef[1] + std[1]*qt(0.975,n_p)
@@ -124,3 +125,28 @@ confidence
 #
 summary(modele)
 anova(modele)
+=======
+
+###### Prévision ############
+
+### Prediction : 
+names(data)
+newdata <- data.frame(CLMAGE=45,SEATBELT=factor(1),ATTORNEY=factor(1),MARITAL=factor("single"))
+newdata
+(prediction <- predict(modele,newdata=newdata,type="response",interval="prediction",level=0.95))
+
+#vrai prediction
+exp(prediction)
+
+
+bunchdata <- data.frame(CLMAGE=c(70,45,45,45,45,45,45,45,22),SEATBELT=factor(c(1,1,1,1,1,2,1,1,2)),
+              ATTORNEY=factor(c(1,1,1,1,1,1,1,2,2)),MARITAL=factor(c("single","married","divorced","widowed","single","single","single","single","single")))
+bunchdata
+## Prediction de la moyenne
+(prediction <- predict(modele,newdata=bunchdata,type="response",interval="confidence",level=0.95))
+
+
+#vrai prediction de la moyenne
+
+exp(prediction)
+>>>>>>> bebae930c53c0d3bbde31214ea17e79b700bcbe5
