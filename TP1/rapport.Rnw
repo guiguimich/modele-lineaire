@@ -153,7 +153,9 @@ Les variables qualitatives du modèle, soit \textit{ATTORNEY, SEATBELT et MARITA
 régression linéaire comportant des variables qualitatives.
 \subsection{Interactions}
 \label{ssec:interaction}
-
+Suite à la selection des variables, il nous a été possible de déterminer qu'il y avait une seule
+interaction non-redondante (qui ne cause pas de multicolinéarité) et significative au modèle. Il
+s'agit de l'interaction entre les variables \textit{CLMAGE et ATTORNEY} qui représentent respectivement l'âge du réclamant ou de la réclamante et la présence d'un avocat pour la réclamation. Cette interaction est logique ,car en effet, l'âge d'un réclamant peut influencer la décision de prendre un avocat. 
 \subsection{Interprétation}
 \label{ssec:interpretation}
 
