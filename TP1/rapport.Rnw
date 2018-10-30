@@ -10,9 +10,7 @@
     if (!require("pacman")) install.packages("pacman")
     pacman::p_load(ggplot2,gridExtra,MASS)
     data <- read.csv("AutoBodyInjury.csv",sep = ";")
-    tail(sort(data$CLMAGE),5) 
-    tail(sort(data$LOSS),5)
-    str(data)
+
     ## Correction des erreurs dans MARITAL
     correction <- gsub("ma.*","married",data$MARITAL)
     correction <- gsub("si.*","single",correction)
@@ -22,6 +20,8 @@
     correction <- gsub("male*","M",data$CLMSEX)
     data$CLMSEX <- factor(correction)
     
+    ## Correction des erreurs dans CLMAGE (retrait de la ligne de l'âge 610)
+    data[66,7] <- 61
     
     # Conversion en factor de ATTORNEY,CLIMINSUR & SEATBELT
     for(i in c("ATTORNEY","CLMINSUR","SEATBELT")){
@@ -43,6 +43,9 @@
     p3 <- ggplot(data=df_list[[3]], aes(x=MARITAL,y = Freq,color=MARITAL)) + geom_bar(stat="identity",fill = "lightgrey") +theme_classic()
     p4 <- ggplot(data=df_list[[4]], aes(x=CLMINSUR,y = Freq,color=CLMINSUR)) + geom_bar(stat="identity",fill = "lightgrey") +theme_classic()
     p5 <- ggplot(data=df_list[[5]], aes(x=SEATBELT,y = Freq,color=SEATBELT)) + geom_bar(stat="identity",fill = "lightgrey") +theme_classic() 
+    
+    modele <- lm(log(LOSS)~CLMAGE + ATTORNEY + MARITAL + SEATBELT + 
+                    CLMAGE:ATTORNEY,data=data)
 @
 
 
@@ -159,6 +162,30 @@ régression linéaire comportant des variables qualitatives.
 
 \subsection{Statistiques}
 \label{ssec:stats}
+Voici les intervalles de confiances à 95\% pour chacun des paramètres du modèle:
+\begin{table}[htb]
+\centering
+\caption{Intervalles de confiances des paramètres du modèle}
+\begin{tabular}{l|l|l}
+     & 2.5\% & 97.5\% \\ \hline
+$\beta_0$ &  0.28583388 & 1.262939359       \\
+$\beta_1$     & 0.01334127 & 0.026414523       \\
+$\beta_2$     & -1.32630903 & -0.708680308        \\
+$\beta_{3,1}$     & -0.51501270 & 0.340256198        \\
+$\beta_{3,2}$     & -0.72345837 &  0.148361570        \\
+$\beta_{3,3}$     & -1.69700396 & -0.155725880        \\
+$\beta_4$     &  0.46855029 & 1.528929789       \\
+$\beta_5$     &  -0.02025211 & -0.003201663   
+\end{tabular}
+\end{table}
+
+De plus, voici le $R^2_a$ : $0.2754$. Ainsi, une grande variabilité du modèle n'est pas expliqué par le modèle. Ceci est en parti dû au grand nombre de variables qualitives dans le modèle qui n'ont pas assez de valeurs possibles afin de réfléter l'étendue des valeurs possible de la perte économique. 
+\newpage
+Voici la table anova du modèle :
+<<echo = FALSE>>=
+anova(modele)
+@
+
 
 \section{Analyse des résidus}
 \label{sec:analyse}

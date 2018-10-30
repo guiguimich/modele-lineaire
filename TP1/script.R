@@ -5,7 +5,6 @@ pacman::p_load(ggplot2,gridExtra,MASS,car,alr3)
 # Analyse préliminaire des données ----
 data <- read.csv("AutoBodyInjury.csv",sep = ";")
 
-summary(data[,7:8])
 ## Correction des erreurs dans MARITAL
 correction <- gsub("ma.*","married",data$MARITAL)
 correction <- gsub("si.*","single",correction)
@@ -15,12 +14,8 @@ data$MARITAL <- factor(correction)
 correction <- gsub("male*","M",data$CLMSEX)
 data$CLMSEX <- factor(correction)
 
-## Correction des erreurs dans CLMAGE
-data <- data[-66,]
-
 ## Correction des erreurs dans CLMAGE (retrait de la ligne de l'âge 610)
-data <- data[-66,]
-
+data[66,7] <- 61
 
 # Conversion en factor de ATTORNEY,CLIMINSUR & SEATBELT
 for(i in c("ATTORNEY","CLMINSUR","SEATBELT")){
@@ -110,15 +105,22 @@ vif(modele) # meilleur modèle pour les VIFS
 par(mfrow = c(1,2))
 plot(data$CLMAGE,rstudent(modele),xlab="CLMAGE",main="Student")
 qqnorm(rstudent(modele))
-
 qqline(as.numeric(rstudent(modele))) ## pt  que les résidus sont pas normaux .. :/ 
 
 
 pureErrorAnova(modele)
 
 
-data.frame(unclass(summary(modele)), check.names = FALSE, stringsAsFactors = FALSE)
 
 m <- summary(modele)
 coef <- m$coefficients[,1]
+std <- m$coefficients[,2]
+n_p <- m$df[2]
+coef[1] + std[1]*qt(0.975,n_p)
+sapply(c(-1,1),function(i) coef + i*std*qt(0.975,n_p))
+
+confidence <- as.data.frame(confint(modele))
+confidence 
 #
+summary(modele)
+anova(modele)
