@@ -214,16 +214,16 @@ Cette colonne supposé contenir les états \textbf{F} ou \textbf{M} contient à 
 \begin{enumerate}
 \item LOSS\\
 % À débattre.
-Cette colonne contient une valeur très extrême de \textit{1067.697}. En analysant le boxplot ci-dessous, on voit bien que la valeur est très énorme à comparer au reste. Ainsi, la ligne contenant cette valeur a été retiré afin de préserver au mieux les données jugés adéquates.\\
+Cette colonne contient une valeur très extrême de \textit{1067.697}. En analysant la figure \ref{fig:boxplot}, on voit bien que la valeur est très énorme à comparer au reste. Néanmoins, comme il s'agit de perte économique aux États-Unis suite à une blessure corporelle, cette valeur est possible donc nous ne l'avons pas retiré de l'étude.\\
 
-<<echo = FALSE,fig.cap="\\label{fig:figs}Boxplot de LOSS">>=
+<<echo = FALSE,fig.cap="\\label{fig:boxplot}Boxplot de LOSS">>=
 ggplot(data, aes(y = LOSS)) +
     geom_boxplot() + geom_point(data=data.frame(x=0,y=max(data$LOSS)), size = 3,aes(x=x,y=y),colour="red") +theme_classic()
 
 @
 
 \item CLMAGE\\
-Cette colonne contient une valeur de \textit{610}, valeur impossible selon la description de la variable, soit l'âge du réclamant. Afin de ne pas fausser les résultat, la ligne contenant cette valeur a été retiré.
+Cette colonne contient une valeur de \textit{610}, valeur impossible selon la description de la variable, soit l'âge du réclamant. Afin de ne pas fausser les résultat, cette valeur a été modifié pour 61.
 \end{enumerate}
 \end{enumerate}
 
