@@ -1,5 +1,5 @@
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(ggplot2,gridExtra,MASS,car,alr3)
+pacman::p_load(ggplot2,gridExtra,MASS,car,alr3,lmtest)
 
 
 # Analyse préliminaire des données ----
@@ -133,11 +133,12 @@ anova(modele)
 names(data)
 newdata <- data.frame(CLMAGE=45,SEATBELT=factor(1),ATTORNEY=factor(1),MARITAL=factor("single"))
 newdata
-(prediction <- predict(modele,newdata=newdata,type="response",interval="prediction",level=0.95))
+(prediction1 <- predict(modele,newdata=newdata,type="response",interval="prediction",level=0.95))
+(prediction2 <- predict(modele,newdata=newdata,type="response",interval="confidence",level=0.95))
 
 #vrai prediction
-exp(prediction)
-
+exp(prediction1)
+exp(prediction2)
 
 bunchdata <- data.frame(CLMAGE=c(70,45,45,45,45,45,45,45,22),SEATBELT=factor(c(1,1,1,1,1,2,1,1,2)),
               ATTORNEY=factor(c(1,1,1,1,1,1,1,2,2)),MARITAL=factor(c("single","married","divorced","widowed","single","single","single","single","single")))
@@ -146,7 +147,17 @@ bunchdata
 (prediction <- predict(modele,newdata=bunchdata,type="response",interval="confidence",level=0.95))
 
 
+
 #vrai prediction de la moyenne
 
-exp(prediction)
+p <- exp(prediction)
+p[1,2:3]
+# INDÉPENDANCE
+dwtest(modele)
+
+maketable <- function(whatever){
+    paste0(strsplit(whatever," "),collapse = " & ")
+}
+maketable("CLMAGE MARITAL CLMSEX SEATBELT CLMINSUR ATTORNEY")
+
 

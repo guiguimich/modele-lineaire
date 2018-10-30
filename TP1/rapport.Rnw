@@ -8,7 +8,7 @@
 
 <<include = FALSE>>=
     if (!require("pacman")) install.packages("pacman")
-    pacman::p_load(ggplot2,gridExtra,MASS)
+    pacman::p_load(ggplot2,gridExtra,MASS,lmtest)
     data <- read.csv("AutoBodyInjury.csv",sep = ";")
 
     ## Correction des erreurs dans MARITAL
@@ -183,17 +183,77 @@ $\beta_5$     &  -0.02025211 & -0.003201663
 
 De plus, voici le $R^2_a$ : $0.2754$. Ainsi, une grande variabilité du modèle n'est pas expliqué par le modèle. Ceci est en parti dû au grand nombre de variables qualitives dans le modèle qui n'ont pas assez de valeurs possibles afin de réfléter l'étendue des valeurs possible de la perte économique. 
 
-Voici la table anova du modèle :
-<<echo = FALSE>>=
-anova(modele)
+Voici la table anova du modèle :\\
+\begin{table}[htb]
+\centering
+\caption{Table anova du modèle}
+\begin{tabular}{l|cccc}
+\textbf{Source}    & \textbf{Dl} & \textbf{SS} & \textbf{MS} & \textbf{F} \\ \hline
+SSR &  7   & 809.4939   & 115.642  & 73.48    \\
+SSE & 1328 & 2089.85386 & 1.573685 &       \\ \hline
+SST & 1335 & 2899.348   & 2.171796 &        
+\end{tabular}
+\label{table:anova}
+\end{table}
+\\Selon la statistique F du tableau \ref{table:anova}, on peut effectuer un test de validité globale de la régression linéaire. Ce faisant, nous obtenons une p-value inférieur à $2.2*10^{-16}$ et donc nous concluons que la régression est tout à fait valide. 
+\newpage
+\section{Analyse des résidus}
+\label{sec:analyse}
+\subsection{Linéarité}
+
+<<echo = FALSE, fig.cap="\\label{fig:rstudent}Résidus studentisé en fonction de CLMAGE",fig.pos='htb'>>=
+plot(data$CLMAGE,rstudent(modele),xlab="CLMAGE", ylab="Résidus studentisés")
+@
+
+\newpage
+\subsection{Homogénéité}
+<<echo = FALSE,fig.cap="\\label{fig:homo}Résidus studentisé en fonction de Y",fig.pos='htb'>>=
+plot(modele$fitted.values,rstudent(modele),xlab="Valeurs prédites",
+     ylab="Résidus studentisés")
 @
 
 
-\section{Analyse des résidus}
-\label{sec:analyse}
+\subsection{Indépendance}
+<<echo = FALSE,fig.pos="htb">>=
+dwtest(modele)
+@
 
+\subsection{Normalité}
+<<echo = FALSE,fig.cap = "\\label{fig:normalite}Quantile théorique versus quantile pratique",fig.pos='htb'>>=
+qqnorm(rstudent(modele))
+qqline(as.numeric(rstudent(modele)))
+@
+
+\newpage
 \section{Prévisions}
 \label{sec:prev}
+Pour répondre à la question du directeur, un individu comportant les caractéristiques suivantes,
+CLMAGE=45, SEATBELT=1, ATTORNEY=1, MARITAL="single" et  CLMINSUR = 1 aura selon le modèle actuelle une perte économique de : $Y \in [0.3378229, 46.89545]$\\ à un niveau de 95\%.
+\\
+\\
+Avec les même caractéristiques, on obtient : $E[Y] \in [3.369781, 4.701301]$. Ainsi, on constate la grande variabilité de la perte économique en comparant les différentes bornes des deux prévisions.
+
+\begin{table}[htb]
+\centering
+\addtolength{\leftskip} {-2cm}
+\addtolength{\rightskip}{-2cm}
+\caption{Intervalles de confiances des moyennes de la perte économique totale prévues}
+\begin{tabular}{cccccc|cc}
+CLMAGE & MARITAL & CLMSEX & SEATBELT & CLMINSUR & ATTORNEY & 2.5\% & 97.5\% \\ \hline
+70 & single & M & 1 & 1 & 1 & 4.83 & 8.86     \\
+45 & married & M & 1 & 1 & 1 & 4.26 & 5.54\\
+45 & divorced & M & 1 & 1 & 1 & 3.47 & 8.10\\
+45 & widowed & M & 1 & 1 & 1 & 1.09 & 4.05\\
+45 & single & F & 1 & 1 & 1 & 3.37 & 4.70\\
+45 & single & M & 2 & 1 & 1 & 6.26 & 18.65\\
+45 & single & M & 1 & 2 & 1 & 3.37 & 4.70\\
+45 & single & M & 1 & 1 & 2 & 0.72 & 1.00\\
+22 & single & F & 2 & 1 & 2 & 1.11 & 3.28
+\end{tabular}
+\end{table}
+
+
+
 
 \section{Recommendations}
 
@@ -207,6 +267,7 @@ La base de données originelles utilisé dans la création du modèle a dû subi
 \begin{enumerate}
 \item MARITAL\\
 Cette colonne contient à l'origine plusieurs faute de frappes des états maritaux. Afin d'unifier le tout, il a fallut substituer les états dans ces quatres variables distinctes : \textit{divorced, widowed, married, single}.
+\newpage
 \item CLMSEX\\
 Cette colonne supposé contenir les états \textbf{F} ou \textbf{M} contient à l'origine quelques états \textit{male}. Afin d'unifier le tout, ces états ont été substituer en \textbf{M}.
 \end{enumerate}
@@ -216,12 +277,12 @@ Cette colonne supposé contenir les états \textbf{F} ou \textbf{M} contient à 
 % À débattre.
 Cette colonne contient une valeur très extrême de \textit{1067.697}. En analysant la figure \ref{fig:boxplot}, on voit bien que la valeur est très énorme à comparer au reste. Néanmoins, comme il s'agit de perte économique aux États-Unis suite à une blessure corporelle, cette valeur est possible donc nous ne l'avons pas retiré de l'étude.\\
 
-<<echo = FALSE,fig.cap="\\label{fig:boxplot}Boxplot de LOSS">>=
+<<echo = FALSE,fig.cap="\\label{fig:boxplot}Boxplot de LOSS",fig.pos = "htb">>=
 ggplot(data, aes(y = LOSS)) +
     geom_boxplot() + geom_point(data=data.frame(x=0,y=max(data$LOSS)), size = 3,aes(x=x,y=y),colour="red") +theme_classic()
 
 @
-
+\newpage
 \item CLMAGE\\
 Cette colonne contient une valeur de \textit{610}, valeur impossible selon la description de la variable, soit l'âge du réclamant. Afin de ne pas fausser les résultat, cette valeur a été modifié pour 61.
 \end{enumerate}
