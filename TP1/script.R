@@ -114,7 +114,7 @@ pureErrorAnova(modele)
 
 m <- summary(modele)
 coef <- m$coefficients[,1]
-<<<<<<< HEAD
+
 std <- m$coefficients[,2]
 n_p <- m$df[2]
 coef[1] + std[1]*qt(0.975,n_p)
@@ -125,7 +125,7 @@ confidence
 #
 summary(modele)
 anova(modele)
-=======
+
 
 ###### Prévision ############
 
@@ -149,4 +149,4 @@ bunchdata
 #vrai prediction de la moyenne
 
 exp(prediction)
->>>>>>> bebae930c53c0d3bbde31214ea17e79b700bcbe5
+

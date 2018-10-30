@@ -151,14 +151,14 @@ x_{i,ATTORNEY}\\
 $$
 \subsection{Traitement des variables qualitatives}
 \label{ssec:var_qual}
-Les variables qualitatives du modèle, soit \textit{ATTORNEY, SEATBELT et MARITAL} ont chacune
+Les variables qualitatives du modèle, soit \textit{ATTORNEY, SEATBELT et MARITAL} , ont chacune
 été converti en \textit{factor} car c'est le type de données usuelle de R afin d'effectuer des
 régression linéaire comportant des variables qualitatives.
 \subsection{Interactions}
 \label{ssec:interaction}
-Suite à la selection des variables, il nous a été possible de déterminer qu'il y avait une seule
+Suite à la selection des variables, il nous a été possible de déterminer qu'il n'y avait qu'une seule
 interaction non-redondante (qui ne cause pas de multicolinéarité) et significative au modèle. Il
-s'agit de l'interaction entre les variables \textit{CLMAGE et ATTORNEY} qui représentent respectivement l'âge du réclamant ou de la réclamante et la présence d'un avocat pour la réclamation. Cette interaction est logique ,car en effet, l'âge d'un réclamant peut influencer la décision de prendre un avocat. 
+s'agit de l'interaction entre les variables \textit{CLMAGE et ATTORNEY} qui représentent respectivement l'âge du réclamant ou de la réclamante et la présence d'un avocat pour la réclamation. Cette interaction est logique car en effet, l'âge d'un réclamant peut influencer la décision de prendre un avocat. 
 \subsection{Interprétation}
 \label{ssec:interpretation}
 
@@ -182,7 +182,7 @@ $\beta_5$     &  -0.02025211 & -0.003201663
 \end{table}
 
 De plus, voici le $R^2_a$ : $0.2754$. Ainsi, une grande variabilité du modèle n'est pas expliqué par le modèle. Ceci est en parti dû au grand nombre de variables qualitives dans le modèle qui n'ont pas assez de valeurs possibles afin de réfléter l'étendue des valeurs possible de la perte économique. 
-\newpage
+
 Voici la table anova du modèle :
 <<echo = FALSE>>=
 anova(modele)
