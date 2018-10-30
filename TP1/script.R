@@ -151,13 +151,22 @@ bunchdata
 #vrai prediction de la moyenne
 
 p <- exp(prediction)
-p[1,2:3]
+p
+apply(p[1:9,2:3],1,function(x) paste0(x,collapse = " & "))
 # INDÉPENDANCE
 dwtest(modele)
 
 maketable <- function(whatever){
-    paste0(strsplit(whatever," "),collapse = " & ")
+    paste0(strsplit(whatever," ")[[1]],collapse = " & ")
 }
 maketable("CLMAGE MARITAL CLMSEX SEATBELT CLMINSUR ATTORNEY")
-
+maketable("70 single M 1 1 1")
+maketable("45 married M 1 1 1")
+maketable("45 divorced M 1 1 1")
+maketable("45 widowed M 1 1 1")
+maketable("45 single F 1 1 1")
+maketable("45 single M 2 1 1")
+maketable("45 single M 1 2 1")
+maketable("45 single M 1 1 2")
+maketable("22 single F 2 1 2")
 

@@ -181,9 +181,9 @@ $\beta_5$     &  -0.02025211 & -0.003201663
 \end{tabular}
 \end{table}
 
-De plus, voici le $R^2_a$ : $0.2754$. Ainsi, une grande variabilité du modèle n'est pas expliqué par le modèle. Ceci est en parti dû au grand nombre de variables qualitives dans le modèle qui n'ont pas assez de valeurs possibles afin de réfléter l'étendue des valeurs possible de la perte économique. 
+De plus, voici le $R^2_a$ : $0.2754$. Ainsi, une grande variabilité de la variable endogène n'est pas expliqué par le modèle. Ceci est en parti dû au grand nombre de variables qualitives dans le modèle qui n'ont pas assez de valeurs possibles afin de réfléter l'étendue des valeurs possible de la perte économique. \\
 
-Voici la table anova du modèle :\\
+Voici la table anova du modèle:\\
 \begin{table}[htb]
 \centering
 \caption{Table anova du modèle}
@@ -227,8 +227,8 @@ qqline(as.numeric(rstudent(modele)))
 \newpage
 \section{Prévisions}
 \label{sec:prev}
-Pour répondre à la question du directeur, un individu comportant les caractéristiques suivantes,
-CLMAGE=45, SEATBELT=1, ATTORNEY=1, MARITAL="single" et  CLMINSUR = 1 aura selon le modèle actuelle une perte économique de : $Y \in [0.3378229, 46.89545]$\\ à un niveau de 95\%.
+Pour répondre à la question du directeur, un individu répondant aux caractéristiques suivantes: 
+CLMAGE=45, SEATBELT=1, ATTORNEY=1, MARITAL="single" et  CLMINSUR = 1, aura selon le modèle actuel une perte économique de : $Y \in [0.3378229, 46.89545]$  à un niveau de 95\%.
 \\
 \\
 Avec les même caractéristiques, on obtient : $E[Y] \in [3.369781, 4.701301]$. Ainsi, on constate la grande variabilité de la perte économique en comparant les différentes bornes des deux prévisions.
@@ -292,9 +292,15 @@ Cette colonne contient une valeur de \textit{610}, valeur impossible selon la de
 \section{Transformation}
 \label{annex:transfo}
 <<echo = FALSE>>=
-par(mfrow=c(2,2))
-hist(data$CLMAGE)
-hist(log(1+data$CLMAGE))
+
+bcox <- lm(LOSS ~ CLMAGE,data = data) # On a omis les variables qualitatives pour en faire un modèle simple
+# avec les variables qualitatives incluts dans B0
+boxcox(bcox)
+@
+
+
+<<echo = FALSE>>=
+par(mfrow=c(1,2))
 hist(data$LOSS)
 hist(log(data$LOSS))
 @
