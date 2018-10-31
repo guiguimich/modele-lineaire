@@ -128,12 +128,29 @@ Ces variables sont en majorité qualitative. Une analyse de fréquences de celle
 grid.arrange(p1,p2,p3,p4,p5, nrow = 3)
 @
 
+\begin{table}[htb]
+\centering
+\caption{Analyse des variables continues}
+\begin{tabular}{l|c|c}
+     & CLMAGE & LOSS \\ \hline
+$\min(X)$ &  0.0 & 0.005      \\
+$F_X^{-1}(0.25)$     & 21 & 0.640       \\
+$F_X^{-1}(0.5)$     & 33 & 2.331        \\
+$E[X]$     & 32.6 & 5.965        \\
+$F_X^{-1}(0.75)$     & 41 &  3.998        \\
+$\max(X)$     & 95 & 1067.697 
+\end{tabular}
+\end{table}
 
-<<echo = FALSE>>=
-summary(data[,7:8])
+<<echo = FALSE,fig.cap="\\label{endogene}Variable LOSS en fonction de chaque variables explicatives",fig.pos = "htb">>=
+p6 <- ggplot(data=data,aes(x=ATTORNEY,y= LOSS)) + geom_point()
+p7 <- ggplot(data=data,aes(x=CLMSEX,y= LOSS)) + geom_point()
+p8 <- ggplot(data=data,aes(x=MARITAL,y= LOSS)) + geom_point()
+p9 <- ggplot(data=data,aes(x=CLMINSUR,y= LOSS)) + geom_point()
+p10 <- ggplot(data=data,aes(x=SEATBELT,y= LOSS)) + geom_point()
+p11 <- ggplot(data=data,aes(x=CLMAGE,y= LOSS)) + geom_point()
+grid.arrange(p6,p7,p8,p9,p10,p11, nrow = 3)
 @
-
-
 
 \section{Modèle proposé}
 \label{sec:modele}
@@ -223,7 +240,8 @@ dwtest(modele)
 qqnorm(rstudent(modele))
 qqline(as.numeric(rstudent(modele)))
 @
-
+\subsection{Test pour manque d'ajustement}
+Après avoir effectuer un test pour manque d'ajustement, on obtient une p-value de $8.623*10^{-5}$, valeur inférieure au seuil de 5\%. Ainsi, on doit rejeter $H_0$, ce qui implique que le modèle actuel ne s'ajuste pas bien aux données.
 \newpage
 \section{Prévisions}
 \label{sec:prev}

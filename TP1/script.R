@@ -24,6 +24,7 @@ for(i in c("ATTORNEY","CLMINSUR","SEATBELT")){
 
 #sapply(data,class)
 
+
 # Création du plot des fréquences ----
 df_list <- list()
 for(i in c("ATTORNEY","CLMSEX","MARITAL","CLMINSUR","SEATBELT") ){
@@ -40,7 +41,14 @@ p4 <- ggplot(data=df_list[[4]], aes(x=CLMINSUR,y = Freq,color=CLMINSUR)) + geom_
 p5 <- ggplot(data=df_list[[5]], aes(x=SEATBELT,y = Freq,color=SEATBELT)) + geom_bar(stat="identity",fill = "lightgrey") +theme_classic()
 grid.arrange(p1,p2,p3,p4,p5, nrow = 2)
 
-
+summary(data[,7:8])
+p6 <- ggplot(data=data,aes(x=ATTORNEY,y= LOSS)) + geom_point()
+p7 <- ggplot(data=data,aes(x=CLMSEX,y= LOSS)) + geom_point()
+p8 <- ggplot(data=data,aes(x=MARITAL,y= LOSS)) + geom_point()
+p9 <- ggplot(data=data,aes(x=CLMINSUR,y= LOSS)) + geom_point()
+p10 <- ggplot(data=data,aes(x=SEATBELT,y= LOSS)) + geom_point()
+p11 <- ggplot(data=data,aes(x=CLMAGE,y= LOSS)) + geom_point()
+grid.arrange(p6,p7,p8,p9,p10,p11, nrow = 3)
 #################################### Modèle #################################
 summary(data$LOSS)
 
